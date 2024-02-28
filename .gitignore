@@ -58,3 +58,5 @@ apps/site/public/talk/
 apps/studio/types/**
 
 .expo
+
+.vscode/settings.json

@@ -4,35 +4,30 @@
     "slug": "expo-router-example",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./lib/assets/images/icon.png",
+    "icon": "./src/lib/assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./lib/assets/images/splash.png",
+      "image": "./src/lib/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./lib/assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/lib/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./lib/assets/images/favicon.png"
+      "favicon": "./src/lib/assets/images/favicon.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-font"
-    ],
+    "plugins": ["expo-router", "expo-font"],
     "experiments": {
       "typedRoutes": true
     }
