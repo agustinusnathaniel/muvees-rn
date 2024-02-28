@@ -1,9 +1,18 @@
-import { Text, View } from 'tamagui'
+import { Input, Label, View, YStack } from 'tamagui'
 
 export default function TabTwoScreen() {
   return (
     <View flex={1} alignItems="center">
-      <Text fontSize={20}>Tab Two</Text>
+      <YStack padding={24} gap={16} fullscreen>
+        <YStack>
+          <Label>Name</Label>
+          <Input placeholder="Hello" />
+        </YStack>
+        <YStack>
+          <Label>Password</Label>
+          <Input secureTextEntry placeholder="Hello" />
+        </YStack>
+      </YStack>
     </View>
   )
 }

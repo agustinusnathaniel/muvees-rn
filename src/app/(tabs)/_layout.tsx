@@ -1,5 +1,5 @@
-import { Link, Tabs } from 'expo-router'
-import { Button, Text } from 'tamagui'
+import { Tabs } from 'expo-router'
+import { Home, FormInput } from '@tamagui/lucide-icons'
 
 export default function TabLayout() {
   return (
@@ -12,22 +12,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <Text>Hello! {color}</Text>,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Button size="$2" chromeless>
-                Press Me!
-              </Button>
-            </Link>
-          ),
+          title: 'Home',
+          tabBarIcon: ({ color }) => <Home color={color} />,
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <Text>Hello! {color}</Text>,
+          title: 'Form',
+          tabBarIcon: ({ color }) => <FormInput color={color} />,
         }}
       />
     </Tabs>

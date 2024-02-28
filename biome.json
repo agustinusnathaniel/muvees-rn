@@ -55,6 +55,9 @@
         "noHeaderScope": "off",
         "useAltText": "off",
         "useButtonType": "off"
+      },
+      "nursery": {
+        "noUnusedImports": "error"
       }
     }
   },
