@@ -5,8 +5,6 @@ export const useMovieListPage = () => {
     section: 'popular',
   })
 
-  console.info({ movieListData, isLoadingMovieList })
-
   return {
     movieListData,
     isLoadingMovieList,

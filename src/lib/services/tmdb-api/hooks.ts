@@ -27,8 +27,6 @@ export const useGetAPI = <ResDataType>({
     swrOptions
   )
 
-  console.info({ data, isLoading, isValidating, error })
-
   return {
     data,
     isLoading,
