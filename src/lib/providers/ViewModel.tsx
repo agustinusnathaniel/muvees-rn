@@ -6,7 +6,7 @@ const ViewModelContext = React.createContext<ViewModelValue<unknown> | undefined
   undefined
 )
 
-export const useViewModelContext = <T = unknown>() => {
+export const useViewModelContext = <T extends Object>() => {
   const viewModelContextValue = React.useContext(ViewModelContext)
 
   if (!viewModelContextValue) {
@@ -16,7 +16,7 @@ export const useViewModelContext = <T = unknown>() => {
   return viewModelContextValue as T
 }
 
-export const ViewModelProvider = <T = unknown>({
+export const ViewModelProvider = <T extends Object>({
   children,
   ...props
 }: React.PropsWithChildren<T>) => {
