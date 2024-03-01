@@ -8,7 +8,8 @@ export const service = axios.create({
 })
 
 service.interceptors.request.use((config) => {
-  config.params['api_key'] = TMDB_API_KEY
+  const params = { ...config.params, api_key: TMDB_API_KEY }
+  config.params = params
   return config
 })
 
@@ -20,7 +21,7 @@ export type APIFetcherParams = {
 }
 
 export const getAPI = <ResType = unknown>({ path, config }: APIFetcherParams) =>
-  service.get<ResType>(path, config)
+  service.get<ResType>(path, config).then((res) => res.data)
 
 export type PostAPIParams<ReqType> = APIFetcherParams & {
   requestBody?: ReqType

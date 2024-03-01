@@ -8,6 +8,7 @@ import '^/tamagui-web.css'
 import { config } from '^/tamagui.config'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
+import { SWRConfig } from 'swr'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,10 +49,30 @@ function RootLayoutNav() {
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <ThemeProvider value={DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
+        <SWRConfig
+          value={{
+            provider: () => new Map(),
+            isOnline() {
+              /* Customize the network state detector */
+              return true
+            },
+            isVisible() {
+              /* Customize the visibility state detector */
+              return true
+            },
+            initFocus(callback) {
+              /* Register the listener with your state provider */
+            },
+            initReconnect(callback) {
+              /* Register the listener with your state provider */
+            },
+          }}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          </Stack>
+        </SWRConfig>
       </ThemeProvider>
     </TamaguiProvider>
   )
