@@ -23,6 +23,7 @@
     "@tamagui/config": "^1.90.13",
     "@tamagui/lucide-icons": "^1.90.13",
     "@tamagui/metro-plugin": "^1.90.13",
+    "axios": "^1.6.7",
     "babel-preset-expo": "^10.0.1",
     "expo": "~50.0.8",
     "expo-font": "~11.10.3",
@@ -41,8 +42,10 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "^14.1.0",
     "react-native-web": "^0.19.9",
+    "swr": "^2.2.5",
     "tamagui": "^1.90.13",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
