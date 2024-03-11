@@ -1,7 +1,7 @@
 import { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage'
 import { useViewModelContext } from '@/lib/providers/ViewModel'
 import { FlatList } from 'react-native'
-import { Image, Text, View } from 'tamagui'
+import { H3, Image, Text, View, XStack } from 'tamagui'
 import { Card } from 'tamagui'
 
 const MovieList = () => {
@@ -16,23 +16,35 @@ const MovieList = () => {
       // }
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <Card backgroundColor="$gray1" marginHorizontal={24}>
-          <Card.Header>
-            <Text fontSize="$8" fontWeight="bold">
-              {item.title}
-            </Text>
-          </Card.Header>
-          <Image
-            source={{
-              height: 200,
-              uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
-            }}
-            width="100%"
-            height="100%"
-          />
-          <Text color="$gray10" paddingHorizontal={20} paddingVertical={12}>
-            {item.overview}
-          </Text>
+        <Card backgroundColor="$gray1" marginHorizontal={24} maxHeight={200}>
+          <XStack width="100%">
+            <Card.Header gap="$2" width="100%">
+              <H3 color="white">{item.title}</H3>
+              <Text
+                fontSize="$3"
+                color="$gray10"
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                ellipsizeMode="tail"
+              >
+                {item.overview}
+              </Text>
+            </Card.Header>
+
+            <Card.Background borderRadius={12}>
+              <Image
+                source={{
+                  width: 500,
+                  height: 200,
+                  uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+                }}
+                height="100%"
+                resizeMode="cover"
+                blurRadius={2}
+              />
+            </Card.Background>
+          </XStack>
         </Card>
       )}
       ListHeaderComponent={() => <View height={20} />}
