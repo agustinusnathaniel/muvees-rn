@@ -1,6 +1,6 @@
 import { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage'
 import { useViewModelContext } from '@/lib/providers/ViewModel'
-import { FlatList, RefreshControl } from 'react-native'
+import { FlatList } from 'react-native'
 import { Image, Text, View } from 'tamagui'
 import { Card } from 'tamagui'
 
@@ -11,9 +11,9 @@ const MovieList = () => {
   return (
     <FlatList
       data={movieListData?.results}
-      refreshControl={
-        <RefreshControl refreshing={isLoadingMovieList} onRefresh={refreshMovieList} />
-      }
+      // refreshControl={
+      //   <RefreshControl refreshing={isLoadingMovieList} onRefresh={refreshMovieList} progressViewOffset={20} />
+      // }
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <Card backgroundColor="$gray1" marginHorizontal={24}>
