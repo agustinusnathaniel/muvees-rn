@@ -16,23 +16,24 @@ const MovieList = () => {
       // }
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <Card backgroundColor="$gray1" marginHorizontal={24} maxHeight={200}>
+        <Card backgroundColor="$gray12" marginHorizontal={24} maxHeight={200}>
           <XStack width="100%">
             <Card.Header gap="$2" width="100%">
               <H3 color="white">{item.title}</H3>
               <Text
                 fontSize="$3"
-                color="$gray10"
+                color="$gray8"
                 whiteSpace="nowrap"
                 overflow="hidden"
                 textOverflow="ellipsis"
                 ellipsizeMode="tail"
+                numberOfLines={4}
               >
                 {item.overview}
               </Text>
             </Card.Header>
 
-            <Card.Background borderRadius={12}>
+            <Card.Background borderRadius={12} opacity={0.5}>
               <Image
                 source={{
                   width: 500,
