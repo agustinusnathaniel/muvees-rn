@@ -7,7 +7,6 @@
     "enabled": true,
     "rules": {
       "correctness": {
-        "useExhaustiveDependencies": "off",
         "noInnerDeclarations": "off",
         "noUnnecessaryContinue": "off",
         "noConstructorReturn": "off"

@@ -1,7 +1,7 @@
 import { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage'
 import { useViewModelContext } from '@/lib/providers/ViewModel'
 import { FlatList } from 'react-native'
-import { H3, Image, Text, View, XStack } from 'tamagui'
+import { H4, Image, Text, View, XStack } from 'tamagui'
 import { Card } from 'tamagui'
 
 const MovieList = () => {
@@ -16,35 +16,28 @@ const MovieList = () => {
       // }
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <Card backgroundColor="$gray12" marginHorizontal={24} maxHeight={200}>
-          <XStack width="100%">
-            <Card.Header gap="$2" width="100%">
-              <H3 color="white">{item.title}</H3>
-              <Text
-                fontSize="$3"
-                color="$gray8"
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                ellipsizeMode="tail"
-                numberOfLines={4}
-              >
-                {item.overview}
-              </Text>
-            </Card.Header>
-
-            <Card.Background borderRadius={12} opacity={0.5}>
+        <Card backgroundColor="white" marginHorizontal={24} maxHeight={140}>
+          <XStack>
+            <View overflow="hidden" borderTopLeftRadius={12} borderBottomLeftRadius={12}>
               <Image
                 source={{
-                  width: 500,
-                  height: 200,
-                  uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+                  width: 100,
+                  height: 140,
+                  uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
                 }}
                 height="100%"
                 resizeMode="cover"
-                blurRadius={2}
               />
-            </Card.Background>
+            </View>
+
+            <Card.Header maxWidth="70%" justifyContent="space-between" height="100%">
+              <H4 numberOfLines={1} ellipsizeMode="tail">
+                {item.title}
+              </H4>
+              <Text fontSize="$3" color="$gray10" ellipsizeMode="tail" numberOfLines={3}>
+                {item.overview}
+              </Text>
+            </Card.Header>
           </XStack>
         </Card>
       )}
