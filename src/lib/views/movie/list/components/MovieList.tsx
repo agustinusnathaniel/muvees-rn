@@ -1,7 +1,7 @@
 import { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage'
 import { useViewModelContext } from '@/lib/providers/ViewModel'
 import { FlatList } from 'react-native'
-import { Text, View } from 'tamagui'
+import { Image, Text, View } from 'tamagui'
 import { Card } from 'tamagui'
 
 const MovieList = () => {
@@ -18,6 +18,14 @@ const MovieList = () => {
               {item.title}
             </Text>
           </Card.Header>
+          <Image
+            source={{
+              height: 200,
+              uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            }}
+            width="100%"
+            height="100%"
+          />
           <Text color="$gray9" paddingHorizontal={20} paddingVertical={12}>
             {item.overview}
           </Text>
