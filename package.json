@@ -8,6 +8,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "android:release-mode": "yarn android --variant release",
+    "ios:release-mode": "yarn android --variant release",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "yarn dlx @biomejs/biome lint ./src",

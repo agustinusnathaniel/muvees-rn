@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-router-example",
-    "slug": "expo-router-example",
+    "name": "muvees-rn-expo",
+    "slug": "muvees-rn-expo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/lib/assets/images/icon.png",
@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sozonome.muvees.expo"
     },
     "android": {
       "adaptiveIcon": {
