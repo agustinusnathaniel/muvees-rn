@@ -1,5 +1,5 @@
 import { TMDB_API_KEY, TMDB_API_URL } from '@/lib/constants/env'
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { type AxiosRequestConfig } from 'axios'
 
 // Fetcher Config
 export const service = axios.create({

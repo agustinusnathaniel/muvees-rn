@@ -1,4 +1,4 @@
-import { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage'
+import type { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage'
 import { useViewModelContext } from '@/lib/providers/ViewModel'
 import { FlatList } from 'react-native'
 import { H4, Image, Text, View, XStack } from 'tamagui'

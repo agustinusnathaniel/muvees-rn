@@ -1,5 +1,5 @@
-import useSWR, { SWRConfiguration } from 'swr'
-import { APIFetcherParams, getAPI } from './fetcher'
+import useSWR, { type SWRConfiguration } from 'swr'
+import { type APIFetcherParams, getAPI } from './fetcher'
 
 const swrOptions: SWRConfiguration = {
   shouldRetryOnError: false,
