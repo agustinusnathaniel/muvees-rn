@@ -32,30 +32,16 @@ node_modules
 .DS_Store
 
 .next
-
 .vercel
-
-apps/site/out
-apps/kitchen-sink/ios
-
 .tamagui
-
 .idea
 
 .env
 # local env files
 .env.local
 .env.development.local
-.env.test.localp
+.env.test.local
 .env.production.local
-
-apps/kitchen-sink/ios
-apps/kitchen-sink/android
-
-# ignore until videos finalized
-apps/site/public/talk/
-
-apps/studio/types/**
 
 .expo
 
