@@ -60,3 +60,13 @@ apps/studio/types/**
 .expo
 
 .vscode/settings.json
+
+eas.json
+android/
+ios/
+.env.*.local
+credentials.json
+credentials/
+ios/certs/*
+*.aab
+*.apk
