@@ -1,51 +1,48 @@
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { SplashScreen, Stack } from 'expo-router'
-import { useColorScheme } from 'react-native'
-import { TamaguiProvider } from 'tamagui'
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { SplashScreen, Stack } from 'expo-router';
+import { TamaguiProvider } from 'tamagui';
 
-import '^/tamagui-web.css'
+import '^/tamagui-web.css';
 
-import { config } from '^/tamagui.config'
-import { useFonts } from 'expo-font'
-import { useEffect } from 'react'
-import { SWRConfig } from 'swr'
+import { config } from '^/tamagui.config';
+import { useFonts } from 'expo-font';
+import { useEffect } from 'react';
+import { SWRConfig } from 'swr';
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router'
+} from 'expo-router';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: '(tabs)',
-}
+};
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontLoaded, fontError] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
-  })
+  });
 
   useEffect(() => {
     if (fontLoaded || fontError) {
       // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
-      SplashScreen.hideAsync()
+      SplashScreen.hideAsync();
     }
-  }, [fontLoaded, fontError])
+  }, [fontLoaded, fontError]);
 
-  if (!fontLoaded && !fontError) {
-    return null
+  if (!(fontLoaded || fontError)) {
+    return null;
   }
 
-  return <RootLayoutNav />
+  return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme()
-
   return (
     <TamaguiProvider config={config} defaultTheme="light">
       <ThemeProvider value={DefaultTheme}>
@@ -54,16 +51,16 @@ function RootLayoutNav() {
             provider: () => new Map(),
             isOnline() {
               /* Customize the network state detector */
-              return true
+              return true;
             },
             isVisible() {
               /* Customize the visibility state detector */
-              return true
+              return true;
             },
-            initFocus(callback) {
+            initFocus() {
               /* Register the listener with your state provider */
             },
-            initReconnect(callback) {
+            initReconnect() {
               /* Register the listener with your state provider */
             },
           }}
@@ -75,5 +72,5 @@ function RootLayoutNav() {
         </SWRConfig>
       </ThemeProvider>
     </TamaguiProvider>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { useGetMovieList } from '@/lib/services/tmdb-api/movies/getList'
+import { useGetMovieList } from '@/lib/services/tmdb-api/movies/getList';
 
 export const useMovieListPage = () => {
   const {
@@ -7,13 +7,13 @@ export const useMovieListPage = () => {
     mutate: refreshMovieList,
   } = useGetMovieList({
     section: 'popular',
-  })
+  });
 
   return {
     movieListData,
     isLoadingMovieList,
     refreshMovieList,
-  }
-}
+  };
+};
 
-export type MovieListPageViewModel = ReturnType<typeof useMovieListPage>
+export type MovieListPageViewModel = ReturnType<typeof useMovieListPage>;

@@ -1,24 +1,30 @@
-import React from 'react'
+import React from 'react';
 
-type ViewModelValue<T> = T
+type ViewModelValue<T> = T;
 
-const ViewModelContext = React.createContext<ViewModelValue<unknown> | undefined>(
-  undefined
-)
+const ViewModelContext = React.createContext<
+  ViewModelValue<unknown> | undefined
+>(undefined);
 
-export const useViewModelContext = <T extends Object>() => {
-  const viewModelContextValue = React.useContext(ViewModelContext)
+export const useViewModelContext = <T = unknown>() => {
+  const viewModelContextValue = React.useContext(ViewModelContext);
 
   if (!viewModelContextValue) {
-    throw new Error('useViewModelContext must be used within ViewModelProvider')
+    throw new Error(
+      'useViewModelContext must be used within ViewModelProvider',
+    );
   }
 
-  return viewModelContextValue as T
-}
+  return viewModelContextValue as T;
+};
 
-export const ViewModelProvider = <T extends Object>({
+export const ViewModelProvider = <T = unknown>({
   children,
   ...props
 }: React.PropsWithChildren<T>) => {
-  return <ViewModelContext.Provider value={props}>{children}</ViewModelContext.Provider>
-}
+  return (
+    <ViewModelContext.Provider value={props}>
+      {children}
+    </ViewModelContext.Provider>
+  );
+};

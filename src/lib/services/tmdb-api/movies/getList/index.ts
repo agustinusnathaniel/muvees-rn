@@ -1,20 +1,32 @@
-import { useGetAPI } from '@/lib/services/tmdb-api/hooks'
-import type { MovieListResponse, TMovieListParams, UseGetMovieListParams } from './types'
+import { useGetAPI } from '@/lib/services/tmdb-api/hooks';
+import type {
+  MovieListResponse,
+  TMovieListParams,
+  UseGetMovieListParams,
+} from './types';
 
-const SEARCH_RESOURCE_PATH = `/search/movie`
-const DISCOVER_RESOURCE_PATH = `/discover/movie`
+const SEARCH_RESOURCE_PATH = '/search/movie';
+const DISCOVER_RESOURCE_PATH = '/discover/movie';
 
-const movieListEndpoint = ({ section, query, with_genres }: TMovieListParams) => {
+const movieListEndpoint = ({
+  section,
+  query,
+  with_genres,
+}: TMovieListParams) => {
   if (query) {
-    return SEARCH_RESOURCE_PATH
+    return SEARCH_RESOURCE_PATH;
   }
   if (with_genres) {
-    return DISCOVER_RESOURCE_PATH
+    return DISCOVER_RESOURCE_PATH;
   }
-  return `/movie/${section}`
-}
+  return `/movie/${section}`;
+};
 
-export const useGetMovieList = ({ section, params, isReady }: UseGetMovieListParams) =>
+export const useGetMovieList = ({
+  section,
+  params,
+  isReady,
+}: UseGetMovieListParams) =>
   useGetAPI<MovieListResponse>({
     path: movieListEndpoint({
       section,
@@ -25,7 +37,7 @@ export const useGetMovieList = ({ section, params, isReady }: UseGetMovieListPar
       params,
     },
     isReady,
-  })
+  });
 
 export const useMovieRecommendations = (id: number) =>
-  useGetAPI<MovieListResponse>({ path: `/movie/${id}/recommendations` })
+  useGetAPI<MovieListResponse>({ path: `/movie/${id}/recommendations` });

@@ -1,4 +1,4 @@
-import { Input, Label, View, YStack } from 'tamagui'
+import { Input, Label, View, YStack } from 'tamagui';
 
 export default function TabTwoScreen() {
   return (
@@ -14,9 +14,13 @@ export default function TabTwoScreen() {
         </YStack>
         <YStack>
           <Label>E-Mail</Label>
-          <Input textContentType="password" secureTextEntry placeholder="Hello" />
+          <Input
+            textContentType="password"
+            secureTextEntry
+            placeholder="Hello"
+          />
         </YStack>
       </YStack>
     </View>
-  )
+  );
 }

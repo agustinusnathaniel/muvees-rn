@@ -1,12 +1,11 @@
-import type { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage'
-import { useViewModelContext } from '@/lib/providers/ViewModel'
-import { FlatList } from 'react-native'
-import { H4, Image, Text, View, XStack } from 'tamagui'
-import { Card } from 'tamagui'
+import type { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage';
+import { useViewModelContext } from '@/lib/providers/ViewModel';
+import { FlatList } from 'react-native';
+import { H4, Image, Text, View, XStack } from 'tamagui';
+import { Card } from 'tamagui';
 
 const MovieList = () => {
-  const { movieListData, isLoadingMovieList, refreshMovieList } =
-    useViewModelContext<MovieListPageViewModel>()
+  const { movieListData } = useViewModelContext<MovieListPageViewModel>();
 
   return (
     <FlatList
@@ -18,7 +17,11 @@ const MovieList = () => {
       renderItem={({ item }) => (
         <Card backgroundColor="white" marginHorizontal={24} maxHeight={140}>
           <XStack>
-            <View overflow="hidden" borderTopLeftRadius={12} borderBottomLeftRadius={12}>
+            <View
+              overflow="hidden"
+              borderTopLeftRadius={12}
+              borderBottomLeftRadius={12}
+            >
               <Image
                 source={{
                   width: 100,
@@ -30,11 +33,20 @@ const MovieList = () => {
               />
             </View>
 
-            <Card.Header maxWidth="70%" justifyContent="space-between" height="100%">
+            <Card.Header
+              maxWidth="70%"
+              justifyContent="space-between"
+              height="100%"
+            >
               <H4 numberOfLines={1} ellipsizeMode="tail">
                 {item.title}
               </H4>
-              <Text fontSize="$3" color="$gray10" ellipsizeMode="tail" numberOfLines={3}>
+              <Text
+                fontSize="$3"
+                color="$gray10"
+                ellipsizeMode="tail"
+                numberOfLines={3}
+              >
                 {item.overview}
               </Text>
             </Card.Header>
@@ -45,7 +57,7 @@ const MovieList = () => {
       ItemSeparatorComponent={() => <View height={20} />}
       ListFooterComponent={() => <View height={20} />}
     />
-  )
-}
+  );
+};
 
-export default MovieList
+export default MovieList;

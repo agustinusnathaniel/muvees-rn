@@ -1,5 +1,5 @@
-import { FormInput, Home } from '@tamagui/lucide-icons'
-import { Tabs } from 'expo-router'
+import { FormInput, Home } from '@tamagui/lucide-icons';
+import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
   return (
@@ -24,5 +24,5 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-  )
+  );
 }

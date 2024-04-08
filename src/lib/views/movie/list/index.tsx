@@ -1,12 +1,12 @@
-import { useMovieListPage } from '@/lib/hooks/movie/useMovieListPage'
-import { ViewModelProvider } from '@/lib/providers/ViewModel'
-import { Spinner, View } from 'tamagui'
-import MovieList from './components/MovieList'
+import { useMovieListPage } from '@/lib/hooks/movie/useMovieListPage';
+import { ViewModelProvider } from '@/lib/providers/ViewModel';
+import { Spinner, View } from 'tamagui';
+import MovieList from './components/MovieList';
 
 const MovieListScreen = () => {
-  const viewModel = useMovieListPage()
+  const viewModel = useMovieListPage();
 
-  const { isLoadingMovieList, movieListData } = viewModel
+  const { isLoadingMovieList } = viewModel;
 
   return (
     <ViewModelProvider {...viewModel}>
@@ -15,7 +15,7 @@ const MovieListScreen = () => {
         <MovieList />
       </View>
     </ViewModelProvider>
-  )
-}
+  );
+};
 
-export default MovieListScreen
+export default MovieListScreen;

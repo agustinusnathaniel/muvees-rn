@@ -1,5 +1,5 @@
-import useSWR, { type SWRConfiguration } from 'swr'
-import { type APIFetcherParams, getAPI } from './fetcher'
+import useSWR, { type SWRConfiguration } from 'swr';
+import { type APIFetcherParams, getAPI } from './fetcher';
 
 const swrOptions: SWRConfiguration = {
   shouldRetryOnError: false,
@@ -7,11 +7,11 @@ const swrOptions: SWRConfiguration = {
   revalidateOnReconnect: false,
   revalidateOnFocus: false,
   revalidateIfStale: true,
-}
+};
 
 type UseGetApiParams = APIFetcherParams & {
-  isReady?: boolean
-}
+  isReady?: boolean;
+};
 
 /**
  * automatic / immediate GET without trigger
@@ -24,8 +24,8 @@ export const useGetAPI = <ResDataType>({
   const { data, isLoading, isValidating, error, mutate } = useSWR(
     isReady ? [path, config] : null,
     ([path, config]) => getAPI<ResDataType>({ path, config }),
-    swrOptions
-  )
+    swrOptions,
+  );
 
   return {
     data,
@@ -33,5 +33,5 @@ export const useGetAPI = <ResDataType>({
     isValidating,
     error,
     mutate,
-  }
-}
+  };
+};

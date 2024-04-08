@@ -15,7 +15,7 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "yarn dlx @biomejs/biome lint ./src",
-    "toolchain:fix": "yarn dlx @biomejs/biome check --apply ./src",
+    "biome:apply": "yarn dlx @biomejs/biome check --apply ./src",
     "prepare": "husky"
   },
   "jest": {
