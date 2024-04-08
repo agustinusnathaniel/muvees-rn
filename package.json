@@ -9,7 +9,7 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "android:preview-release": "yarn android --variant release",
+    "android:build-apk": "eas build --platform android --local --profile=preview",
     "android:release": "eas build --platform android --local --output=android-app-release.aab",
     "ios:release": "yarn android --variant release",
     "web": "expo start --web",
