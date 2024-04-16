@@ -3,6 +3,9 @@
   "organizeImports": {
     "enabled": true
   },
+  "formatter": {
+    "indentStyle": "space"
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -18,9 +21,6 @@
         "useSimplifiedLogicExpression": "error"
       }
     }
-  },
-  "formatter": {
-    "indentStyle": "space"
   },
   "javascript": {
     "formatter": {
