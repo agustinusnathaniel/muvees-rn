@@ -7,6 +7,12 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: 'blue',
         tabBarInactiveTintColor: '#4e4e4e',
+        headerTitleStyle: {
+          fontFamily: 'NunitoBold',
+        },
+        tabBarLabelStyle: {
+          fontFamily: 'Nunito',
+        },
       }}
     >
       <Tabs.Screen
