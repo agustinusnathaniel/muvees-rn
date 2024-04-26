@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.sozonome.muvees.expo"
@@ -52,6 +54,12 @@
       "eas": {
         "projectId": "d8a6c213-93c6-42dd-8447-d904919825a3"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d8a6c213-93c6-42dd-8447-d904919825a3"
     }
   }
 }
