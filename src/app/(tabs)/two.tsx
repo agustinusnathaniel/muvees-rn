@@ -12,14 +12,14 @@ export default function TabTwoScreen() {
           <Label>Password</Label>
           <Input secureTextEntry placeholder="Hello" />
         </YStack>
-        <YStack>
+        {/* <YStack>
           <Label>E-Mail</Label>
           <Input
             textContentType="password"
             secureTextEntry
             placeholder="Hello"
           />
-        </YStack>
+        </YStack> */}
       </YStack>
     </View>
   );
