@@ -10,7 +10,7 @@ const MovieListScreen = () => {
 
   return (
     <ViewModelProvider {...viewModel}>
-      <View width="100%" alignItems="center">
+      <View flex={1}>
         {isLoadingMovieList ? <Spinner /> : null}
         <MovieList />
       </View>

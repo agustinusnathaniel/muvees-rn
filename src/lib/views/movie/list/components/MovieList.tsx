@@ -1,6 +1,6 @@
 import type { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage';
 import { useViewModelContext } from '@/lib/providers/ViewModel';
-import { FlatList } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { H4, Image, Text, View, XStack } from 'tamagui';
 import { Card } from 'tamagui';
 
@@ -8,7 +8,8 @@ const MovieList = () => {
   const { movieListData } = useViewModelContext<MovieListPageViewModel>();
 
   return (
-    <FlatList
+    <FlashList
+      estimatedItemSize={20}
       data={movieListData?.results}
       // refreshControl={
       //   <RefreshControl refreshing={isLoadingMovieList} onRefresh={refreshMovieList} progressViewOffset={20} />
