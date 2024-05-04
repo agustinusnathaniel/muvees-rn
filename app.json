@@ -12,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.sozonome.muvees.expo"
@@ -24,7 +22,8 @@
         "foregroundImage": "./src/lib/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.sozonome.muvees_exp"
+      "package": "com.sozonome.muvees_exp",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
