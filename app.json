@@ -14,10 +14,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "userInterfaceStyle": "automatic",
       "supportsTablet": true,
       "bundleIdentifier": "com.sozonome.muvees.expo"
     },
     "android": {
+      "userInterfaceStyle": "automatic",
       "adaptiveIcon": {
         "foregroundImage": "./src/lib/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
