@@ -16,7 +16,11 @@ import {
   Nunito_900Black,
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito';
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { TamaguiProvider } from 'tamagui';
@@ -26,6 +30,7 @@ import { useEffect } from 'react';
 import { SWRConfig } from 'swr';
 
 import '^/tamagui-web.css';
+import { useColorScheme } from 'react-native';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -75,9 +80,12 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const colorScheme = useColorScheme();
+
   return (
-    <TamaguiProvider config={config} defaultTheme="light">
-      <ThemeProvider value={DefaultTheme}>
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <SWRConfig
           value={{
             provider: () => new Map(),

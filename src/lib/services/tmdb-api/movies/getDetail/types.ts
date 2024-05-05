@@ -44,3 +44,8 @@ export type MovieDetailResponse = Omit<MovieListItemType, 'genre_ids'> & {
     | 'Canceled';
   tagline?: string;
 };
+
+export type UseGetMovieDetailParams = {
+  id: string;
+  isReady?: boolean;
+};
