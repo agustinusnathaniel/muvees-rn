@@ -6411,6 +6411,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-env@npm:^7.0.3":
+  version: 7.0.3
+  resolution: "cross-env@npm:7.0.3"
+  dependencies:
+    cross-spawn: "npm:^7.0.1"
+  bin:
+    cross-env: src/bin/cross-env.js
+    cross-env-shell: src/bin/cross-env-shell.js
+  checksum: e99911f0d31c20e990fd92d6fd001f4b01668a303221227cc5cb42ed155f086351b1b3bd2699b200e527ab13011b032801f8ce638e6f09f854bdf744095e604c
+  languageName: node
+  linkType: hard
+
 "cross-fetch@npm:^3.1.5":
   version: 3.1.8
   resolution: "cross-fetch@npm:3.1.8"
@@ -6433,7 +6445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -6756,6 +6768,13 @@ __metadata:
   version: 10.0.0
   resolution: "dotenv-expand@npm:10.0.0"
   checksum: b41eb278bc96b92cbf3037ca5f3d21e8845bf165dc06b6f9a0a03d278c2bd5a01c0cfbb3528ae3a60301ba1a8a9cace30e748c54b460753bc00d4c014b675597
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.4.5":
+  version: 16.4.5
+  resolution: "dotenv@npm:16.4.5"
+  checksum: 55a3134601115194ae0f924e54473459ed0d9fc340ae610b676e248cca45aa7c680d86365318ea964e6da4e2ea80c4514c1adab5adb43d6867fb57ff068f95c8
   languageName: node
   linkType: hard
 
@@ -10018,7 +10037,9 @@ __metadata:
     "@types/react": "npm:~18.2.45"
     axios: "npm:^1.6.8"
     babel-preset-expo: "npm:^10.0.2"
+    cross-env: "npm:^7.0.3"
     dayjs: "npm:^1.11.11"
+    dotenv: "npm:^16.4.5"
     expo: "npm:~50.0.17"
     expo-build-properties: "npm:~0.11.1"
     expo-font: "npm:~11.10.3"
@@ -10043,6 +10064,7 @@ __metadata:
     swr: "npm:^2.2.5"
     tamagui: "npm:^1.95.1"
     typescript: "npm:^5.4.5"
+    zod: "npm:^3.23.8"
     zustand: "npm:^4.5.2"
   languageName: unknown
   linkType: soft
@@ -13542,6 +13564,13 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 846fd73e1af0def79c19d510ea9e4a795544a67d5b34b7e1c4d0425bf6bfd1c719446d94cdfa1721c1987d891321d61f779e8236fde517dc0e524aa851a6eff1
   languageName: node
   linkType: hard
 

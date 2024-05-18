@@ -1,16 +1,10 @@
-import { TMDB_API_KEY, TMDB_API_URL } from '@/lib/constants/env';
+import { Env } from '@env';
 import axios, { type AxiosRequestConfig } from 'axios';
 
 // Fetcher Config
 export const service = axios.create({
-  baseURL: TMDB_API_URL,
+  baseURL: Env.API_URL,
   timeout: 60000,
-});
-
-service.interceptors.request.use((config) => {
-  const params = { ...config.params, api_key: TMDB_API_KEY };
-  config.params = params;
-  return config;
 });
 
 // Fetchers

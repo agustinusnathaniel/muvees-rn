@@ -37,17 +37,11 @@ node_modules
 .idea
 
 .env
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 .expo
 
 .vscode/settings.json
 
-eas.json
 android/
 ios/
 .env.*.local
