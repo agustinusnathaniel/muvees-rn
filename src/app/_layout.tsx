@@ -1,3 +1,7 @@
+if (__DEV__) {
+  import('^/ReactotronConfig');
+}
+
 import {
   Nunito_200ExtraLight,
   Nunito_200ExtraLight_Italic,
