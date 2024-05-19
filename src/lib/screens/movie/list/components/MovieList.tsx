@@ -1,10 +1,11 @@
-import type { MovieListPageViewModel } from '@/lib/hooks/movie/useMovieListPage';
-import { useViewModelContext } from '@/lib/providers/ViewModel';
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
 import { RefreshControl } from 'react-native';
 import { H4, Image, Text, View, XStack } from 'tamagui';
 import { Card } from 'tamagui';
+
+import { useViewModelContext } from '@/lib/providers/ViewModel';
+import type { MovieListPageViewModel } from '@/lib/screens/movie/list/hooks';
 
 const MovieList = () => {
   const { movieListData, isLoadingMovieList, refreshMovieList } =

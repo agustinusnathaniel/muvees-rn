@@ -1,8 +1,9 @@
-import { useGetMovieDetail } from '@/lib/services/tmdb-api/movies/getDetail';
 import dayjs from 'dayjs';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { RefreshControl, useWindowDimensions } from 'react-native';
 import { H2, Image, ScrollView, Text, XStack, YStack } from 'tamagui';
+
+import { useGetMovieDetail } from '@/lib/services/tmdb-api/movies/getDetail';
 
 const MovieDetailScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();

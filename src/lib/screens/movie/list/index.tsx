@@ -1,7 +1,9 @@
-import { useMovieListPage } from '@/lib/hooks/movie/useMovieListPage';
-import { ViewModelProvider } from '@/lib/providers/ViewModel';
 import { Spinner, View } from 'tamagui';
+
+import { ViewModelProvider } from '@/lib/providers/ViewModel';
+
 import MovieList from './components/MovieList';
+import { useMovieListPage } from './hooks';
 
 const MovieListScreen = () => {
   const viewModel = useMovieListPage();
