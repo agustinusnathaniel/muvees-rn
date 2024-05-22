@@ -67,7 +67,12 @@ export const SelectInput = <Option,>({
       </Select.Trigger>
 
       <Adapt when="sm" platform="touch">
-        <Sheet modal dismissOnSnapToBottom>
+        <Sheet
+          modal
+          dismissOnSnapToBottom
+          moveOnKeyboardChange
+          snapPointsMode="fit"
+        >
           <Sheet.Handle />
           <Sheet.Frame>
             {searchable ? (
