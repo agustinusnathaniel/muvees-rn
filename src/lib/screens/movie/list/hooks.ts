@@ -13,8 +13,6 @@ export const useMovieListPage = () => {
     section,
   });
 
-  console.info({ section });
-
   return {
     movieListData,
     isLoadingMovieList,
