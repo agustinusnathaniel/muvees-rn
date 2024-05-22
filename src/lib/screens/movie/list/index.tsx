@@ -5,9 +5,8 @@ import { ViewModelProvider } from '@/lib/providers/ViewModel';
 import MovieList from './components/MovieList';
 import { useMovieListPage } from './hooks';
 
-const MovieListScreen = () => {
+export const MovieListScreen = () => {
   const viewModel = useMovieListPage();
-
   const { isLoadingMovieList } = viewModel;
 
   return (
@@ -19,5 +18,3 @@ const MovieListScreen = () => {
     </ViewModelProvider>
   );
 };
-
-export default MovieListScreen;

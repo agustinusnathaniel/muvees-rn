@@ -4,12 +4,26 @@ import { RefreshControl } from 'react-native';
 import { H4, Image, Text, View, XStack } from 'tamagui';
 import { Card } from 'tamagui';
 
+import { SelectInput } from '@/lib/components/SelectInput';
 import { useViewModelContext } from '@/lib/providers/ViewModel';
 import type { MovieListPageViewModel } from '@/lib/screens/movie/list/hooks';
+import type { ListType } from '@/lib/services/tmdb-api/movies/getList/types';
+
+const sectionOptions: Array<{ label: string; value: ListType }> = [
+  { label: 'Popular', value: 'popular' },
+  { label: 'Top Rated', value: 'top_rated' },
+  { label: 'Now Playing', value: 'now_playing' },
+  { label: 'Upcoming', value: 'upcoming' },
+];
 
 const MovieList = () => {
-  const { movieListData, isLoadingMovieList, refreshMovieList } =
-    useViewModelContext<MovieListPageViewModel>();
+  const {
+    movieListData,
+    isLoadingMovieList,
+    refreshMovieList,
+    section,
+    setSection,
+  } = useViewModelContext<MovieListPageViewModel>();
 
   return (
     <FlashList
@@ -23,9 +37,23 @@ const MovieList = () => {
         />
       }
       keyExtractor={(item) => item.id.toString()}
+      ListHeaderComponent={() => (
+        <View margin="$5">
+          <SelectInput
+            options={sectionOptions}
+            getOptionLabel={(item) => item.label}
+            getOptionValue={(item) => item.value}
+            value={section}
+            onValueChange={(item) => setSection(item as ListType)}
+            searchable
+          />
+        </View>
+      )}
+      ItemSeparatorComponent={() => <View height={20} />}
+      ListFooterComponent={() => <View height={20} />}
       renderItem={({ item }) => (
         <Link href={`/movie/${item.id}`} asChild>
-          <Card marginHorizontal={24} maxHeight={140}>
+          <Card marginHorizontal={24} maxHeight={140} elevate>
             <XStack>
               <View
                 overflow="hidden"
@@ -39,7 +67,7 @@ const MovieList = () => {
                     uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
                   }}
                   height="100%"
-                  resizeMode="cover"
+                  objectFit="cover"
                 />
               </View>
 
@@ -64,9 +92,6 @@ const MovieList = () => {
           </Card>
         </Link>
       )}
-      ListHeaderComponent={() => <View height={20} />}
-      ItemSeparatorComponent={() => <View height={20} />}
-      ListFooterComponent={() => <View height={20} />}
     />
   );
 };

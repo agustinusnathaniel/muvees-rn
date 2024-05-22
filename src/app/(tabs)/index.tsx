@@ -1,3 +1,3 @@
-import MovieListScreen from '@/lib/views/movie/list';
+import { MovieListScreen } from '@/lib/screens/movie/list';
 
 export default MovieListScreen;
