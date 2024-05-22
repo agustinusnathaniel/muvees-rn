@@ -71,6 +71,8 @@ export const SelectInput = <Option,>({
           modal
           dismissOnSnapToBottom
           moveOnKeyboardChange
+          forceRemoveScrollEnabled
+          unmountChildrenWhenHidden
           snapPointsMode="fit"
         >
           <Sheet.Handle />
