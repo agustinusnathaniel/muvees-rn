@@ -3,6 +3,8 @@ import type { ConfigContext, ExpoConfig } from '@expo/config';
 
 import { ClientEnv, Env } from './env';
 
+const buildNumber = 4;
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: Env.NAME,
@@ -23,6 +25,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     userInterfaceStyle: 'automatic',
     supportsTablet: true,
     bundleIdentifier: Env.BUNDLE_ID,
+    buildNumber: String(buildNumber),
   },
   android: {
     userInterfaceStyle: 'automatic',
@@ -31,7 +34,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: '#ffffff',
     },
     package: Env.PACKAGE,
-    versionCode: 3,
+    versionCode: buildNumber,
   },
   web: {
     bundler: 'metro',

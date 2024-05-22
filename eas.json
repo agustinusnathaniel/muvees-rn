@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 7.6.2"
+    "version": ">= 7.6.2",
+    "requireCommit": true
   },
   "build": {
     "development": {
@@ -18,6 +19,14 @@
       "env": {
         "EXPO_NO_DOTENV": "1",
         "APP_ENV": "development"
+      }
+    },
+    "production-apk": {
+      "distribution": "internal",
+      "channel": "production",
+      "env": {
+        "EXPO_NO_DOTENV": "1",
+        "APP_ENV": "production"
       }
     },
     "production": {

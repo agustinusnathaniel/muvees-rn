@@ -24,6 +24,7 @@
     "build:preview:android": "cross-env APP_ENV=development yarn build:android --profile preview",
     "build:production:ios": "cross-env APP_ENV=production yarn build:ios --profile production",
     "build:production:android": "cross-env APP_ENV=production yarn build:android --profile production",
+    "build:production:android-apk": "cross-env APP_ENV=production yarn build:android --profile production-apk",
     "release:android": "yarn prebuild:production:android && yarn build:production:android",
     "web": "expo start --web",
     "test": "jest --watchAll",
