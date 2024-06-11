@@ -2,6 +2,8 @@ if (__DEV__) {
   import('^/ReactotronConfig');
 }
 
+import '^/tamagui-web.css';
+
 import {
   Nunito_200ExtraLight,
   Nunito_200ExtraLight_Italic,
@@ -27,14 +29,12 @@ import {
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
+import { useEffect } from 'react';
+import { useColorScheme } from 'react-native';
+import { SWRConfig } from 'swr';
 import { TamaguiProvider } from 'tamagui';
 
 import { config } from '^/tamagui.config';
-import { useEffect } from 'react';
-import { SWRConfig } from 'swr';
-
-import '^/tamagui-web.css';
-import { useColorScheme } from 'react-native';
 
 export {
   // Catch any errors thrown by the Layout component.
