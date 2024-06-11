@@ -8,7 +8,7 @@ import { useGetMovieDetail } from '@/lib/services/tmdb-api/movies/getDetail';
 const MovieDetailScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data, isLoading, mutate } = useGetMovieDetail({
-    id,
+    id: id ?? '',
     isReady: !!id,
   });
   const { width } = useWindowDimensions();
@@ -42,7 +42,7 @@ const MovieDetailScreen = () => {
               borderRadius={12}
               height={(2.25 / 5) * width}
               width={(1.5 / 5) * width}
-              resizeMode="cover"
+              objectFit="cover"
             />
             <YStack gap="$2.5" justifyContent="center" flexShrink={1}>
               <H2 fontWeight="800" flexWrap="wrap">
@@ -66,7 +66,7 @@ const MovieDetailScreen = () => {
               </Text>
             ))}
           </XStack>
-          <Text fontSize="$6" fontWeight="600">
+          <Text fontSize="$5" color="$gray11">
             {data?.overview}
           </Text>
         </YStack>

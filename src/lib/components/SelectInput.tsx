@@ -22,6 +22,11 @@ export const SelectInput = <Option,>({
 }: SelectInputProps<Option>) => {
   const [keyword, setKeyword] = useState('');
 
+  const selectedItem = options.find(
+    (item) => getOptionValue(item) === props.value,
+  );
+  const valueLabel = selectedItem ? getOptionLabel(selectedItem) : null;
+
   const filteredOptions = useMemo(
     () =>
       options.filter((item) =>
@@ -63,7 +68,9 @@ export const SelectInput = <Option,>({
       {...props}
     >
       <Select.Trigger iconAfter={ChevronDown}>
-        <Select.Value fontWeight="700" placeholder={placeholder} />
+        <Select.Value fontWeight="700" placeholder={placeholder}>
+          {valueLabel}
+        </Select.Value>
       </Select.Trigger>
 
       <Adapt when="sm" platform="touch">
