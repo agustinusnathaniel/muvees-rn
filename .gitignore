@@ -37,6 +37,7 @@ node_modules
 .idea
 
 .env
+.env.*
 
 .expo
 
