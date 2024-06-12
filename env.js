@@ -41,8 +41,8 @@ require('dotenv').config({
 const BUNDLE_ID = 'com.sozonome.muvees.expo'; // ios bundle id
 const PACKAGE = 'com.sozonome.muvees.expo'; // android package name
 const NAME = 'muvees-rn-expo'; // app name
-const EXPO_ACCOUNT_OWNER = process.env.EXPO_ACCOUNT_OWNER; // expo account owner
-const EAS_PROJECT_ID = process.env.EAS_PROJECT_ID; // eas project id
+const EXPO_ACCOUNT_OWNER = 'sozonome'; // expo account owner
+const EAS_PROJECT_ID = 'd8a6c213-93c6-42dd-8447-d904919825a3'; // eas project id
 const SCHEME = 'myapp'; // app scheme
 const EAS_UPDATES_URL = `https://u.expo.dev/${EAS_PROJECT_ID}`;
 
