@@ -38,6 +38,7 @@ const nunitoFace = {
 
 const headingFont = createFont({
   ...configBase.fonts.heading,
+  family: 'Nunito',
   face: nunitoFace,
 });
 
