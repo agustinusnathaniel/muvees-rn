@@ -1,3 +1,4 @@
+import * as themes from './src/lib/styles/theme';
 import { config as configBase } from '@tamagui/config';
 import { createFont, createTamagui } from 'tamagui';
 
@@ -55,6 +56,7 @@ export const config = createTamagui({
     heading: headingFont,
     body: bodyFont,
   },
+  themes,
 });
 
 export default config;
