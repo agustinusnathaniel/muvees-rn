@@ -6,21 +6,13 @@ import '^/tamagui-web.css';
 
 import {
   Nunito_200ExtraLight,
-  Nunito_200ExtraLight_Italic,
   Nunito_300Light,
-  Nunito_300Light_Italic,
   Nunito_400Regular,
-  Nunito_400Regular_Italic,
   Nunito_500Medium,
-  Nunito_500Medium_Italic,
   Nunito_600SemiBold,
-  Nunito_600SemiBold_Italic,
   Nunito_700Bold,
-  Nunito_700Bold_Italic,
   Nunito_800ExtraBold,
-  Nunito_800ExtraBold_Italic,
   Nunito_900Black,
-  Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito';
 import {
   DarkTheme,
@@ -59,14 +51,6 @@ export default function RootLayout() {
     NunitoBold: Nunito_700Bold,
     NunitoExtraBold: Nunito_800ExtraBold,
     NunitoBlack: Nunito_900Black,
-    NunitoExtraLightItalic: Nunito_200ExtraLight_Italic,
-    NunitoLightItalic: Nunito_300Light_Italic,
-    NunitoItalic: Nunito_400Regular_Italic,
-    NunitoMediumItalic: Nunito_500Medium_Italic,
-    NunitoSemiBoldItalic: Nunito_600SemiBold_Italic,
-    NunitoBoldItalic: Nunito_700Bold_Italic,
-    NunitoExtraBoldItalic: Nunito_800ExtraBold_Italic,
-    NunitoBlackItalic: Nunito_900Black_Italic,
   });
 
   useEffect(() => {

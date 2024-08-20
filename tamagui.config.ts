@@ -5,35 +5,27 @@ import { createFont, createTamagui } from 'tamagui';
 const nunitoFace = {
   200: {
     normal: 'NunitoExtraLight',
-    italic: 'NunitoExtraLightItalic',
   },
   300: {
     normal: 'NunitoLight',
-    italic: 'NunitoLightItalic',
   },
   400: {
     normal: 'Nunito',
-    italic: 'NunitoItalic',
   },
   500: {
     normal: 'NunitoMedium',
-    italic: 'NunitoMediumItalic',
   },
   600: {
     normal: 'NunitoSemiBold',
-    italic: 'NunitoSemiBoldItalic',
   },
   700: {
     normal: 'NunitoBold',
-    italic: 'NunitoBoldItalic',
   },
   800: {
     normal: 'NunitoExtraBold',
-    italic: 'NunitoExtraBoldItalic',
   },
   900: {
     normal: 'NunitoBlack',
-    italic: 'NunitoBlackItalic',
   },
 };
 
