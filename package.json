@@ -45,6 +45,7 @@
     "test": "jest --watchAll",
     "lint": "yarn biome lint ./src",
     "biome:apply": "yarn biome check --write ./src",
+    "release": "commit-and-tag-version",
     "prepare": "husky"
   },
   "jest": {
@@ -96,6 +97,7 @@
     "@tamagui/metro-plugin": "^1.110.2",
     "@types/react": "~18.2.45",
     "@types/react-native": "^0.73.0",
+    "commit-and-tag-version": "^12.4.2",
     "cross-env": "^7.0.3",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
