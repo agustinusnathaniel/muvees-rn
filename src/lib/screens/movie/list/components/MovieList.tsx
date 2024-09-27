@@ -52,7 +52,10 @@ const MovieList = () => {
       ItemSeparatorComponent={() => <View height={20} />}
       ListFooterComponent={() => <View height={20} />}
       renderItem={({ item }) => (
-        <Link href={`/movie/${item.id}`} asChild>
+        <Link
+          href={{ pathname: '/movie/[id]', params: { id: item.id } }}
+          asChild
+        >
           <Card marginHorizontal={24} maxHeight={140} elevate>
             <XStack>
               <View

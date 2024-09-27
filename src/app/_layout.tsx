@@ -22,7 +22,7 @@ import {
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { StatusBar, useColorScheme } from 'react-native';
 import { SWRConfig } from 'swr';
 import { TamaguiProvider } from 'tamagui';
 
@@ -71,9 +71,14 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
+    <TamaguiProvider
+      config={config}
+      defaultTheme={colorScheme === 'dark' ? 'dark' : 'light'}
+    >
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <StatusBar
+          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+        />
         <SWRConfig
           value={{
             provider: () => new Map(),
