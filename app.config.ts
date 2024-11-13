@@ -50,10 +50,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         android: {
           enableProguardInReleaseBuilds: true,
           enableShrinkResourcesInReleaseBuilds: true,
-          newArchEnabled: true,
-        },
-        ios: {
-          newArchEnabled: true,
         },
       },
     ],
