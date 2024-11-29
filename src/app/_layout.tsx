@@ -103,6 +103,7 @@ function RootLayoutNav() {
               headerTitleStyle: {
                 fontFamily: 'NunitoBold',
               },
+              headerBackTitle: 'Back',
             }}
           >
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

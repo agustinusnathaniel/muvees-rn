@@ -17,7 +17,6 @@ const MovieDetailScreen = () => {
     <>
       <Stack.Screen
         options={{
-          headerBackTitleVisible: false,
           headerTitle: data?.title,
         }}
       />

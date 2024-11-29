@@ -5,8 +5,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarLabelStyle: {
-          fontFamily: 'Nunito',
+        headerTitleStyle: {
+          fontFamily: 'NunitoBold',
         },
       }}
     >
