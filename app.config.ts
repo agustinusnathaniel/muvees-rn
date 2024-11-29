@@ -3,7 +3,7 @@ import type { ConfigContext, ExpoConfig } from '@expo/config';
 
 import { ClientEnv, Env } from './env';
 
-const buildNumber = 6;
+const buildNumber = 7;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
