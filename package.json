@@ -46,7 +46,7 @@
     "test": "jest --watchAll",
     "lint": "yarn biome lint ./src",
     "biome:apply": "yarn biome check --write ./src",
-    "release": "commit-and-tag-version",
+    "release": "cross-env HUSKY=0 commit-and-tag-version",
     "prepare": "husky"
   },
   "jest": {
