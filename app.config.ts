@@ -16,11 +16,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   icon: './src/lib/assets/images/icon.png',
   scheme: 'myapp',
   userInterfaceStyle: 'automatic',
-  splash: {
-    image: './src/lib/assets/images/splash.png',
-    resizeMode: 'contain',
-    backgroundColor: '#ffffff',
-  },
   assetBundlePatterns: ['**/*'],
   ios: {
     userInterfaceStyle: 'automatic',
@@ -45,6 +40,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     'expo-router',
     'expo-font',
+    [
+      'expo-splash-screen',
+      {
+        backgroundColor: '#ffffff',
+        image: './src/lib/assets/images/splash.png',
+        imageWidth: 200,
+      },
+    ],
     [
       'expo-build-properties',
       {
