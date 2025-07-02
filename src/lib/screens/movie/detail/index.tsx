@@ -30,7 +30,7 @@ const MovieDetailScreen = () => {
             uri: `https://image.tmdb.org/t/p/w500${data?.backdrop_path}`,
           }}
           height={200}
-          resizeMode="cover"
+          objectFit="cover"
         />
         <YStack gap="$4" padding="$4">
           <XStack gap="$3" alignItems="center">

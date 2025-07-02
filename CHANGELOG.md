@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.3](https://github.com/sozonome/learn-tamagui-expo/compare/v1.1.2...v1.1.3) (2025-02-24)
+
 ## [1.1.2](https://github.com/sozonome/learn-tamagui-expo/compare/v1.1.1...v1.1.2) (2024-11-29)
 
 ## [1.1.1](https://github.com/sozonome/learn-tamagui-expo/compare/v1.1.0...v1.1.1) (2024-09-06)

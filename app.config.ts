@@ -3,7 +3,7 @@ import type { ConfigContext, ExpoConfig } from '@expo/config';
 
 import { ClientEnv, Env } from './env';
 
-const buildNumber = 7;
+const buildNumber = 9;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -40,11 +40,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     'expo-router',
     'expo-font',
+    'expo-web-browser',
     [
       'expo-splash-screen',
       {
         backgroundColor: '#ffffff',
-        image: './src/lib/assets/images/splash.png',
+        image: './src/lib/assets/images/icon.png',
         imageWidth: 200,
       },
     ],
