@@ -17,7 +17,7 @@ const MovieDetailScreen = () => {
     <>
       <Stack.Screen
         options={{
-          headerTitle: data?.title,
+          headerTitle: data?.title ?? 'Loading...',
         }}
       />
       <ScrollView
@@ -47,9 +47,12 @@ const MovieDetailScreen = () => {
               <H2 fontWeight="800" flexWrap="wrap">
                 {data?.title}
               </H2>
-              <Text>
-                Release Date: {dayjs(data?.release_date).format('DD MMM YYYY')}
-              </Text>
+              {data?.release_date ? (
+                <Text>
+                  Release Date:{' '}
+                  {dayjs(data?.release_date).format('DD MMM YYYY')}
+                </Text>
+              ) : null}
             </YStack>
           </XStack>
 
