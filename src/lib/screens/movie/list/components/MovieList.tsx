@@ -27,7 +27,6 @@ const MovieList = () => {
 
   return (
     <FlashList
-      estimatedItemSize={20}
       data={movieListData?.results}
       refreshControl={
         <RefreshControl
@@ -38,7 +37,7 @@ const MovieList = () => {
       }
       keyExtractor={(item) => item.id.toString()}
       ListHeaderComponent={() => (
-        <View margin="$5">
+        <View m="$5">
           <SelectInput
             options={sectionOptions}
             getOptionLabel={(item) => item.label}
@@ -56,7 +55,7 @@ const MovieList = () => {
           href={{ pathname: '/movie/[id]', params: { id: item.id } }}
           asChild
         >
-          <Card marginHorizontal={24} maxHeight={140} elevate>
+          <Card marginHorizontal={24} maxHeight={140} elevation={1}>
             <XStack>
               <View
                 overflow="hidden"
@@ -75,8 +74,8 @@ const MovieList = () => {
               </View>
 
               <Card.Header
-                maxWidth="70%"
-                justifyContent="space-between"
+                maxW="70%"
+                justify="space-between"
                 height="100%"
               >
                 <H4 numberOfLines={1} ellipsizeMode="tail">

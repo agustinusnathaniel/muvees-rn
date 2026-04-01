@@ -2,6 +2,8 @@ if (__DEV__) {
   import('^/ReactotronConfig');
 }
 
+import '@tamagui/native/setup-teleport';
+
 import '^/tamagui-web.css';
 
 import {

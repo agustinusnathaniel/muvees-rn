@@ -9,7 +9,8 @@
       "^/*": ["./*"],
       "@env": ["./src/lib/constants/env.js"]
     },
-    "incremental": true
+    "incremental": true,
+    "skipLibCheck": true
   },
   "include": [
     "**/*.ts",

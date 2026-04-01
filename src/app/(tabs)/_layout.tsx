@@ -1,4 +1,4 @@
-import { FormInput, Home } from '@tamagui/lucide-icons';
+import { FormInput, Home } from '@tamagui/lucide-icons-2';
 import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
