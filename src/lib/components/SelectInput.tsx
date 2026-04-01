@@ -1,4 +1,4 @@
-import { Check, ChevronDown } from '@tamagui/lucide-icons';
+import { Check, ChevronDown } from '@tamagui/lucide-icons-2';
 import { type ReactNode, useMemo, useState } from 'react';
 import { Adapt, Input, Select, type SelectProps, Sheet, View } from 'tamagui';
 
@@ -73,7 +73,7 @@ export const SelectInput = <Option,>({
         </Select.Value>
       </Select.Trigger>
 
-      <Adapt when="sm" platform="touch">
+      <Adapt when="max-md" platform="touch">
         <Sheet
           modal
           dismissOnSnapToBottom
@@ -86,7 +86,7 @@ export const SelectInput = <Option,>({
           <Sheet.Frame>
             {searchable ? (
               <Input
-                margin="$4"
+                m="$4"
                 placeholder="Search..."
                 onChangeText={setKeyword}
                 value={keyword}
@@ -97,14 +97,17 @@ export const SelectInput = <Option,>({
               <View height="$4" />
             </Sheet.ScrollView>
           </Sheet.Frame>
-          <Sheet.Overlay animation="lazy" />
+          <Sheet.Overlay transition="lazy" />
         </Sheet>
       </Adapt>
 
       <Select.Content>
         <Select.ScrollUpButton />
         <Select.Viewport>
-          <Select.Group>{selectOptionItems}</Select.Group>
+          <Select.Group>
+            <Select.Label />
+            {selectOptionItems}
+          </Select.Group>
         </Select.Viewport>
         <Select.ScrollDownButton />
       </Select.Content>

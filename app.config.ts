@@ -9,7 +9,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: Env.NAME,
   description: `${Env.NAME} Mobile App`,
-  newArchEnabled: true,
   slug: 'muvees-rn-expo',
   version: Env.VERSION.toString(),
   orientation: 'portrait',

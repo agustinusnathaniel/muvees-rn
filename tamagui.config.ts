@@ -1,5 +1,6 @@
-import * as themes from './src/lib/styles/theme';
-import { config as configBase } from '@tamagui/config';
+import { themes } from './src/lib/styles/theme';
+import { animations } from '@tamagui/config/v5-reanimated';
+import { defaultConfig } from '@tamagui/config/v5';
 import { createFont, createTamagui } from 'tamagui';
 
 const nunitoFace = {
@@ -30,21 +31,22 @@ const nunitoFace = {
 };
 
 const headingFont = createFont({
-  ...configBase.fonts.heading,
+  ...defaultConfig.fonts.heading,
   family: 'Nunito',
   face: nunitoFace,
 });
 
 const bodyFont = createFont({
-  ...configBase.fonts.body,
+  ...defaultConfig.fonts.body,
   family: 'Nunito',
   face: nunitoFace,
 });
 
 export const config = createTamagui({
-  ...configBase,
+  ...defaultConfig,
+  animations,
   fonts: {
-    ...configBase.fonts,
+    ...defaultConfig.fonts,
     heading: headingFont,
     body: bodyFont,
   },
