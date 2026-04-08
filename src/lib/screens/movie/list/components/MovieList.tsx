@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
 import { RefreshControl } from 'react-native';
-import { H4, Image, Text, View, XStack } from 'tamagui';
+import { H4, Image, Text, View, XStack, YStack } from 'tamagui';
 import { Card } from 'tamagui';
 
 import { SelectInput } from '@/lib/components/SelectInput';
@@ -27,18 +27,16 @@ const MovieList = () => {
 
   return (
     <FlashList
-      estimatedItemSize={20}
       data={movieListData?.results}
       refreshControl={
         <RefreshControl
           refreshing={isLoadingMovieList}
           onRefresh={refreshMovieList}
-          progressViewOffset={20}
         />
       }
       keyExtractor={(item) => item.id.toString()}
       ListHeaderComponent={() => (
-        <View margin="$5">
+        <YStack p="$4">
           <SelectInput
             options={sectionOptions}
             getOptionLabel={(item) => item.label}
@@ -47,39 +45,39 @@ const MovieList = () => {
             onValueChange={(item) => setSection(item as ListType)}
             searchable
           />
-        </View>
+        </YStack>
       )}
-      ItemSeparatorComponent={() => <View height={20} />}
-      ListFooterComponent={() => <View height={20} />}
+      ItemSeparatorComponent={() => <View height={12} />}
+      ListFooterComponent={() => <View height={24} />}
       renderItem={({ item }) => (
         <Link
           href={{ pathname: '/movie/[id]', params: { id: item.id } }}
           asChild
         >
-          <Card marginHorizontal={24} maxHeight={140} elevate>
+          <Card
+            marginHorizontal={16}
+            height={140}
+            elevation={2}
+            borderRadius={12}
+            overflow="hidden"
+            pressStyle={{ scale: 0.98, opacity: 0.9 }}
+          >
             <XStack>
-              <View
-                overflow="hidden"
-                borderTopLeftRadius={12}
-                borderBottomLeftRadius={12}
-              >
-                <Image
-                  source={{
-                    width: 100,
-                    height: 140,
-                    uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                  }}
-                  height="100%"
-                  objectFit="cover"
-                />
-              </View>
-
+              <Image
+                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                width={100}
+                height={140}
+                objectFit="cover"
+              />
               <Card.Header
-                maxWidth="70%"
-                justifyContent="space-between"
-                height="100%"
+                flex={1}
+                p={12}
+                justify="space-between"
               >
-                <H4 numberOfLines={1} ellipsizeMode="tail">
+                <H4
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                >
                   {item.title}
                 </H4>
                 <Text

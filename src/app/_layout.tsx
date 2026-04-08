@@ -1,6 +1,4 @@
-if (__DEV__) {
-  import('^/ReactotronConfig');
-}
+import '@tamagui/native/setup-teleport';
 
 import '^/tamagui-web.css';
 
@@ -14,17 +12,20 @@ import {
   Nunito_800ExtraBold,
   Nunito_900Black,
 } from '@expo-google-fonts/nunito';
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import {
+  ThemeProvider,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+import { Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { StatusBar, useColorScheme } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { SWRConfig } from 'swr';
 import { TamaguiProvider } from 'tamagui';
+
+import { useColorScheme } from '@/lib/hooks/use-color-scheme';
 
 import { config } from '^/tamagui.config';
 
@@ -71,46 +72,41 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <TamaguiProvider
-      config={config}
-      defaultTheme={colorScheme === 'dark' ? 'dark' : 'light'}
-    >
+    <TamaguiProvider config={config} defaultTheme={colorScheme}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <StatusBar
-          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-        />
+        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
         <SWRConfig
           value={{
             provider: () => new Map(),
             isOnline() {
-              /* Customize the network state detector */
               return true;
             },
             isVisible() {
-              /* Customize the visibility state detector */
               return true;
             },
-            initFocus() {
-              /* Register the listener with your state provider */
-            },
-            initReconnect() {
-              /* Register the listener with your state provider */
-            },
+            initFocus() {},
+            initReconnect() {},
           }}
         >
-          <Stack
-            screenOptions={{
-              headerTitleStyle: {
-                fontFamily: 'NunitoBold',
-              },
-              headerBackTitle: 'Back',
-            }}
-          >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          </Stack>
+          <AppStack />
         </SWRConfig>
       </ThemeProvider>
     </TamaguiProvider>
+  );
+}
+
+function AppStack() {
+  return (
+    <Stack
+      screenOptions={{
+        headerTitleStyle: {
+          fontFamily: 'NunitoBold',
+        },
+        headerBackTitle: 'Back',
+      }}
+    >
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+    </Stack>
   );
 }
