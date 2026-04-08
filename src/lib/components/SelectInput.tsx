@@ -97,7 +97,10 @@ export const SelectInput = <Option,>({
               <View height="$4" />
             </Sheet.ScrollView>
           </Sheet.Frame>
-          <Sheet.Overlay transition="lazy" />
+          <Sheet.Overlay
+            // background="rgba(0, 0, 0, 0.5)"
+            transition="lazy"
+          />
         </Sheet>
       </Adapt>
 

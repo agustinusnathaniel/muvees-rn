@@ -1,5 +1,6 @@
 import { FormInput, Home } from '@tamagui/lucide-icons-2';
 import { Tabs } from 'expo-router';
+import type { GetThemeValueForKey } from 'tamagui';
 
 export default function TabLayout() {
   return (
@@ -14,14 +15,18 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <Home color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Home color={color as GetThemeValueForKey<'color'>} />
+          ),
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
           title: 'Form',
-          tabBarIcon: ({ color }) => <FormInput color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FormInput color={color as GetThemeValueForKey<'color'>} />
+          ),
         }}
       />
     </Tabs>

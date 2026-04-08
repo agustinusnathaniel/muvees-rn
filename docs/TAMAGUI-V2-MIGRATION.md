@@ -1,116 +1,77 @@
-# Tamagui v2 Migration Summary
+# Tamagui v2 Migration & Configuration Guide
 
-## Comparison with Official Tamagui v2 Expo Router Starter
-
-Based on https://github.com/tamagui/tamagui/tree/main/code/starters/expo-router
+> Last updated: 2026-04-08
+> Current version: **2.0.0-rc.37** (latest stable)
+> Reference: https://github.com/tamagui/tamagui/tree/main/code/starters/expo-router
 
 ---
 
-## ✅ Aligned with Official Starter
+## 📦 Package Versions
 
-### 1. Package Versions
-- **Tamagui**: 2.0.0-rc.36 ✅
-- **Expo SDK**: 55.0.0 ✅
-- **React**: 19.2.0 ✅
-- **React Native**: 0.83.4 ✅
-- **TypeScript**: 5.9.2 ✅
+| Package | This Project | Official Starter | Notes |
+|---------|-------------|-----------------|-------|
+| `tamagui` | 2.0.0-rc.37 | workspace:* (rc.37) | ✅ Aligned |
+| `@tamagui/config` | 2.0.0-rc.37 | workspace:* | ✅ Aligned |
+| `@tamagui/babel-plugin` | 2.0.0-rc.37 | workspace:* | ✅ Aligned |
+| `@tamagui/metro-plugin` | 2.0.0-rc.37 | ❌ Not used | ⚠️ Dev-only, removed from Metro |
+| `@tamagui/cli` | 2.0.0-rc.37 | implicit | ✅ Aligned |
+| `@tamagui/lucide-icons-2` | 2.0.0-rc.37 | workspace:* | ✅ Aligned |
+| `@tamagui/themes` | 2.0.0-rc.37 | ❌ Not used | Custom themes via `themes` |
+| Expo SDK | 55.0.0 | ~55.0.6 | ✅ Compatible |
+| React | 19.2.0 | >=19 | ✅ Compatible |
+| React Native | 0.83.4 | 0.83.2 | ✅ Compatible |
+| TypeScript | 5.9.2 | ~5.9.2 | ✅ Aligned |
+| react-native-reanimated | 4.2.1 | ~4.2.2 | ✅ Compatible |
+| react-native-worklets | 0.7.2 | 0.7.2 | ✅ Required by reanimated v4 |
 
-### 2. Configuration Format
-```typescript
-// tamagui.config.ts
-import { defaultConfig } from '@tamagui/config/v5'
-import { animations } from '@tamagui/config/v5-reanimated'
-import { createTamagui } from 'tamagui'
-
-export const config = createTamagui({
-  ...defaultConfig,
-  animations,
-  // ... custom fonts/themes
-})
-```
-
-### 3. Babel Plugin
-```javascript
-// babel.config.js
-['@tamagui/babel-plugin', {
-  components: ['tamagui'],
-  config: './tamagui.config.ts',
-  logTimings: true,
-  disableExtraction: process.env.NODE_ENV === 'development',
-}]
-```
-
-### 4. Resolutions
+### Resolutions (required for dedup)
 ```json
 {
   "resolutions": {
-    "@tamagui/core": "2.0.0-rc.36",
-    "@tamagui/web": "2.0.0-rc.36"
+    "@tamagui/core": "2.0.0-rc.37",
+    "@tamagui/web": "2.0.0-rc.37"
   }
 }
 ```
 
-### 5. Code Migration
-- ✅ `animation` → `transition`
-- ✅ `secureTextEntry` → `type="password"`
-- ✅ Native setup imports added
-
 ---
 
-## 🔄 Changes Made to Match Official Starter
+## 🔧 Configuration Files
 
-### 0. Expo SDK 55 Upgrade
-**Updated packages:**
-- `expo`: 53.0.22 → 55.0.0
-- `react`: 19.0.0 → 19.2.0
-- `react-native`: 0.79.5 → 0.83.4
-- `react-native-reanimated`: 3.17.4 → 4.2.1
-- Added `react-native-worklets`: 0.7.2 (required by reanimated v4)
-
-**Config changes:**
-- Removed `newArchEnabled: true` from `app.config.ts` (New Architecture is now default and required)
-
-### 0.1 FlashList v2 Migration
-**Updated:**
-- `@shopify/flash-list`: 2.0.2 → 2.3.1
-
-**Code changes:**
-- Removed `estimatedItemSize` prop (automatic sizing in v2)
-
-**Why:** FlashList v2 has automatic sizing and requires New Architecture (which SDK 55 uses).
-
-### 1. Native Setup Imports (in `_layout.tsx`)
-**Added at top of `src/app/_layout.tsx`:**
+### tamagui.config.ts
 ```typescript
-// Only setup-teleport is needed (we use Sheet component)
-import '@tamagui/native/setup-teleport'
-```
+import { themes } from './src/lib/styles/theme';
+import { animations } from '@tamagui/config/v5-reanimated';
+import { defaultConfig } from '@tamagui/config/v5';
+import { createFont, createTamagui } from 'tamagui';
 
-**Why only `setup-teleport`?**
-- `setup-teleport`: Required because we use `<Sheet>` in SelectInput - ensures React contexts work inside portaled content
-- `setup-expo-linear-gradient`: Not needed - we don't use gradients in our app
+// Custom Nunito font faces...
 
-**Note:** The official starter keeps native imports in `_layout.tsx`, not in a separate `index.js`.
-
-### 2. Metro Config (SIMPLIFIED)
-**Before:**
-```javascript
-const config = getDefaultConfig(__dirname, { isCSSEnabled: true });
-const { withTamagui } = require('@tamagui/metro-plugin');
-module.exports = withTamagui(config, { ... });
-```
-
-**After (matches official):**
-```javascript
-const { getDefaultConfig } = require('expo/metro-config');
-
-module.exports = getDefaultConfig(__dirname, {
-  isCSSEnabled: true,
+export const config = createTamagui({
+  ...defaultConfig,
+  animations,
+  fonts: {
+    ...defaultConfig.fonts,
+    heading: headingFont,
+    body: bodyFont,
+  },
+  themes,
 });
+
+export type Conf = typeof config;
+
+declare module 'tamagui' {
+  interface TamaguiCustomConfig extends Conf {}
+}
 ```
 
-### 3. Build Configuration (NEW)
-**Created `tamagui.build.ts`:**
+**Key points:**
+- Config v5 uses `defaultConfig` from `@tamagui/config/v5` (Radix Colors v3 palette, Tailwind-matching breakpoints)
+- Animations are **separate** — import from `@tamagui/config/v5-reanimated`
+- Custom fonts use `createFont()` spreading from `defaultConfig.fonts`
+- TypeScript module augmentation for IntelliSense
+
+### tamagui.build.ts
 ```typescript
 import type { TamaguiBuildOptions } from 'tamagui';
 
@@ -121,86 +82,202 @@ export default {
 } satisfies TamaguiBuildOptions;
 ```
 
+### babel.config.js
+```javascript
+module.exports = (api) => {
+  api.cache(true);
+  return {
+    presets: [['babel-preset-expo', { jsxRuntime: 'automatic' }]],
+    plugins: [
+      [
+        '@tamagui/babel-plugin',
+        {
+          components: ['tamagui'],
+          config: './tamagui.config.ts',
+          logTimings: true,
+          disableExtraction: process.env.NODE_ENV === 'development',
+        },
+      ],
+      'react-native-reanimated/plugin',
+    ],
+  };
+};
+```
+
+**Diff from official starter:** This project previously had `useReactNativeWebLite: true` — removed because it's not in the official starter and not needed for Expo SDK 55.
+
+### metro.config.js
+```javascript
+const { getDefaultConfig } = require('expo/metro-config');
+
+module.exports = getDefaultConfig(__dirname, {
+  isCSSEnabled: true,
+});
+```
+
+**Diff from official starter:** The official starter uses plain `getDefaultConfig(__dirname)` with no options. We keep `isCSSEnabled: true` because we import `tamagui-web.css` for web styles. The `@tamagui/metro-plugin` / `withTamagui()` wrapper is **no longer needed** — CSS extraction is handled by the compiler.
+
+### _layout.tsx (native setup)
+```typescript
+import '@tamagui/native/setup-teleport';
+import '^/tamagui-web.css';
+```
+
+**Why only `setup-teleport`?**
+- `setup-teleport`: Required for `<Sheet>`, `<Dialog>`, `<Popover>`, `<Select>` — ensures React contexts work inside portaled content via `react-native-teleport`
+- `setup-expo-linear-gradient`: Not needed — we don't use gradients
+
+---
+
+## ✅ Code Migration Changes
+
+### Prop/API Replacements (v1 → v2)
+
+| v1 (old) | v2 (new) | Notes |
+|----------|----------|-------|
+| `animation="bouncy"` | `transition="bouncy"` | Animation prop renamed |
+| `secureTextEntry` | `type="password"` | Standard HTML input API |
+| `keyboardType` | `type="email"`, `type="tel"`, etc. | Standard HTML input API |
+| `onHoverIn` / `onHoverOut` | `onMouseEnter` / `onPointerEnter` | Web events standardization |
+| `useTheme(props)` | `<Theme>` component | Hook → component pattern |
+| `space` / `spaceDirection` (on Group) | `gap` | Use CSS gap instead |
+
+### Native Setup Imports
+
+Add to `src/app/_layout.tsx` (top of file, before other imports):
+
+```typescript
+// Portals for Sheet/Dialog/popover - required if using these components
+import '@tamagui/native/setup-teleport';
+
+// Only if using LinearGradient component
+// import '@tamagui/native/setup-expo-linear-gradient';
+```
+
 ---
 
 ## 📋 Migration Checklist
 
 ### Completed
-- [x] Update all `@tamagui/*` packages to 2.0.0-rc.36
+- [x] Update all `@tamagui/*` packages to 2.0.0-rc.37
 - [x] Update config to use `@tamagui/config/v5`
-- [x] Import animations separately from `@tamagui/config/v5-reanimated`
+- [x] Import animations from `@tamagui/config/v5-reanimated`
 - [x] Add resolutions for `@tamagui/core` and `@tamagui/web`
-- [x] Add native setup import (`@tamagui/native/setup-teleport`) in `_layout.tsx`
-- [x] Simplify metro config (removed `withTamagui`)
+- [x] Add `@tamagui/native/setup-teleport` in `_layout.tsx`
+- [x] Remove `withTamagui` from metro config (no longer needed)
 - [x] Create `tamagui.build.ts` for CSS generation
 - [x] Replace `animation` prop with `transition`
-- [x] Update Input props (`secureTextEntry` → `type`)
+- [x] Update Input props (`secureTextEntry` → `type="password"`)
+- [x] Remove `useReactNativeWebLite` from babel plugin (not needed for Expo 55)
 - [x] Run `tamagui check` ✅
 - [x] Build test ✅
 
-### Optional Improvements (Not Critical)
-- [ ] Consider using default themes instead of custom theme builder
-- [ ] Add `@tamagui/toast` for toast notifications (used in official starter)
-- [ ] Consider removing `@tamagui/metro-plugin` dependency if not needed
+### Not Applicable (Decisions)
+- [ ] ~~Remove `@tamagui/metro-plugin` from devDependencies~~ — Kept as dev dep for `tamagui build` CLI, but **not used in metro.config.js**
+- [ ] ~~Switch to default themes~~ — Custom theme builder retained for Nunito font + custom color scheme
+- [ ] ~~Add `@tamagui/toast`~~ — Not needed, not using toast notifications
 
 ---
 
-## 📁 File Changes Summary
+## 🚀 v2 Key Features Available
 
-### Modified Files
-1. `package.json` - Updated Tamagui deps, added resolutions, updated Expo SDK
-2. `tamagui.config.ts` - Updated to v5 config format
-3. `babel.config.js` - Added `useReactNativeWebLite` option
-4. `metro.config.js` - Simplified (removed withTamagui)
-5. `app.config.ts` - Removed `newArchEnabled` (now default)
-6. `src/lib/styles/theme-builder.ts` - Updated to use `createV5Theme()`
-7. `src/lib/styles/theme.ts` - Simplified re-export
-8. `src/app/_layout.tsx` - Added `@tamagui/native/setup-teleport` import
-9. `src/lib/components/SelectInput.tsx` - `animation` → `transition`
-10. `src/app/(tabs)/two.tsx` - `secureTextEntry` → `type`
-11. `src/app/(tabs)/_layout.tsx` - Updated lucide-icons import
-12. `src/lib/screens/movie/list/components/MovieList.tsx` - Removed `estimatedItemSize`
-13. `tsconfig.json` - Added `skipLibCheck: true`
+### Config v5
+- Expanded color palettes (gray, orange, pink, purple, teal, neutral) via Radix Colors v3
+- Opacity tokens (`$color01`, `$background005`)
+- Pre-tuned shadow opacities
+- Tailwind-matching breakpoints (`640px`–`1536px`)
+- `createV5Theme()` helper for custom theme generation
 
-### New Files
-1. `tamagui.build.ts` - Build configuration
-2. `src/lib/types/tamagui.d.ts` - TypeScript declarations (helper)
+### New Style Support
+- `backgroundImage`, `boxShadow` (multi/inset/spread), `filter`, `mixBlendMode`
+- `isolation`, `boxSizing`, `display`
+- `position: fixed` (auto-converts to `absolute` on native)
+- `border` shorthand, `outline` shorthand
+- `textShadow`, `borderCurve`, `cursor`
 
-### Package Changes
-- `@tamagui/lucide-icons` → `@tamagui/lucide-icons-2` (better v2 support)
-- Added `react-native-worklets` (required by reanimated v4)
-- `@shopify/flash-list`: 2.0.2 → 2.3.1 (v2 migration)
+### Animation Drivers (experimental)
+- `transition` prop replaces `animation`
+- Supports `delay`, asymmetric `enter`/`exit` animations
+- Per-pseudo-state transitions (`hoverStyle`, `pressStyle`)
+- `animatedBy` prop for per-component driver selection
 
----
+### Component Scope (global portals)
+```tsx
+// Mount one Tooltip at root, place triggers anywhere
+<Tooltip scope="global">
+  <Tooltip.Content><Paragraph>Label</Paragraph></Tooltip.Content>
+  <Slot />
+</Tooltip>
 
-## 🎯 Build Verification
-
-```bash
-✅ npx tamagui check - Passed
-✅ npx expo export -p web - Success
-✅ CSS generated
-✅ Expo SDK 55.0.0
-✅ React Native 0.83.4
-✅ React 19.2.0
+// Anywhere in app
+<Tooltip.Trigger scope="global" aria-label="Settings">
+  <Button icon={Settings} />
+</Tooltip.Trigger>
 ```
+
+### Headless Components
+- `@tamagui/switch-headless`, `@tamagui/checkbox-headless`
+- `@tamagui/radio-headless`, `@tamagui/tabs-headless`
+
+### Group Component Changes
+- `Group.Item` is now **required** — no longer auto-clones children
+- Removed `space`, `separator`, `scrollable`, `disablePassBorderRadius` props
+- Manually add `<Separator />` between items
 
 ---
 
 ## 📝 Notes
 
 ### TypeScript Errors
-Expected during development - the babel plugin transforms JSX at build time, but TypeScript doesn't see these transformations. The app builds and runs correctly.
+Expected during development — the babel plugin transforms JSX at build time, but TypeScript doesn't see these transformations. The app builds and runs correctly.
 
 ### Key Differences from v1
-1. **Animations are separate** - Must import from `@tamagui/config/v5-reanimated`
-2. **Native setup imports** - Add `@tamagui/native/setup-teleport` in `_layout.tsx` (only if using Sheet/Dialog/Popover)
-3. **Stricter types** - Tamagui v2 has more precise TypeScript types
-4. **Simpler Metro config** - `withTamagui` plugin is optional
-5. **Config v5** - Uses new `defaultConfig` from `@tamagui/config/v5` with separate animations
-6. **Reanimated v4** - Requires `react-native-worklets` package
-7. **New Architecture required** - SDK 55 only supports New Architecture
+1. **Animations are separate** — Must import from `@tamagui/config/v5-reanimated`
+2. **Native setup imports** — Add `@tamagui/native/setup-teleport` in `_layout.tsx` (only if using Sheet/Dialog/Popover)
+3. **Stricter types** — Tamagui v2 has more precise TypeScript types
+4. **Simpler Metro config** — `withTamagui` plugin is no longer used in metro.config.js
+5. **Config v5** — Uses new `defaultConfig` from `@tamagui/config/v5` with separate animations
+6. **Reanimated v4** — Requires `react-native-worklets` package
+7. **New Architecture required** — Expo SDK 55 only supports New Architecture
+8. **`isCSSEnabled`** — Still used in our Metro config for web CSS support (official starter omits it)
 
-### Resources
+### Prebuild (native code regeneration)
+
+After upgrading Expo SDK or Tamagui, **always** use `--clean` to regenerate native folders from scratch:
+
+```bash
+# Android
+yarn prebuild:android --clean
+
+# iOS
+yarn prebuild:ios --clean
+```
+
+**Why `--clean` is critical:** Without it, stale native files from previous Expo versions linger in `android/` and `ios/`. For example, after upgrading to Expo 55, the old `MainApplication.kt` still referenced `ReactNativeHostWrapper` (removed in Expo 50+), causing Kotlin compilation failures. The `--clean` flag wipes native folders before regenerating, ensuring they match the current SDK version.
+
+### Upgrade Commands
+```bash
+# Upgrade all tamagui packages to latest
+yarn upgrade:tamagui
+
+# Upgrade to canary (pre-release)
+yarn upgrade:tamagui:canary
+
+# Check tamagui configuration
+npx tamagui check
+
+# Generate CSS for web
+npx tamagui build
+
+# Generate LLM prompt for your config (useful for AI-assisted upgrades)
+npx tamagui generate-prompt
+```
+
+---
+
+## 📚 Resources
+
 - [Tamagui v2 Blog Post](https://tamagui.dev/blog/version-two)
 - [Upgrade Guide](https://tamagui.dev/docs/guides/how-to-upgrade)
 - [Official Expo Router Starter](https://github.com/tamagui/tamagui/tree/main/code/starters/expo-router)
+- [Tamagui Docs](https://tamagui.dev/docs)

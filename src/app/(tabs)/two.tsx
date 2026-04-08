@@ -2,8 +2,8 @@ import { Input, Label, View, YStack } from 'tamagui';
 
 export default function TabTwoScreen() {
   return (
-    <View flex={1} alignItems="center">
-      <YStack paddingHorizontal={24} fullscreen>
+    <View flex={1} items="center">
+      <YStack px="$4" fullscreen>
         <YStack>
           <Label>Name</Label>
           <Input placeholder="Hello" />
