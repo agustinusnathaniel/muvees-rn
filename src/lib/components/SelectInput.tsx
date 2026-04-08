@@ -82,6 +82,7 @@ export const SelectInput = <Option,>({
           unmountChildrenWhenHidden
           snapPointsMode="fit"
         >
+          <Sheet.Overlay opacity={0.8} transition="lazy" />
           <Sheet.Handle />
           <Sheet.Frame>
             {searchable ? (
@@ -93,14 +94,10 @@ export const SelectInput = <Option,>({
               />
             ) : null}
             <Sheet.ScrollView scrollEnabled={filteredOptions.length > 6}>
-              <Adapt.Contents />
+              <Select.Adapt.Contents />
               <View height="$4" />
             </Sheet.ScrollView>
           </Sheet.Frame>
-          <Sheet.Overlay
-            // background="rgba(0, 0, 0, 0.5)"
-            transition="lazy"
-          />
         </Sheet>
       </Adapt>
 
@@ -108,7 +105,6 @@ export const SelectInput = <Option,>({
         <Select.ScrollUpButton />
         <Select.Viewport>
           <Select.Group>
-            <Select.Label />
             {selectOptionItems}
           </Select.Group>
         </Select.Viewport>
