@@ -50,3 +50,5 @@ credentials/
 ios/certs/*
 *.aab
 *.apk
+# heroui-agents-md
+.heroui-docs/
