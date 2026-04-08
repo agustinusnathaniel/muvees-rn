@@ -42,9 +42,20 @@ const bodyFont = createFont({
   face: nunitoFace,
 });
 
+const defaultProps = {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  ...((defaultConfig as any).defaultProps ?? {}),
+  Text: {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    ...((defaultConfig as any).defaultProps?.Text ?? {}),
+    fontFamily: '$body',
+  },
+};
+
 export const config = createTamagui({
   ...defaultConfig,
   animations,
+  defaultProps,
   fonts: {
     ...defaultConfig.fonts,
     heading: headingFont,
