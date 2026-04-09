@@ -2,7 +2,7 @@ import { Env } from '@env';
 import axios, { type AxiosRequestConfig } from 'axios';
 
 // Fetcher Config
-export const service = axios.create({
+const service = axios.create({
   baseURL: Env.API_URL,
   timeout: 60000,
 });
@@ -21,8 +21,8 @@ export type PostAPIParams<ReqType> = APIFetcherParams & {
   requestBody?: ReqType;
 };
 
-export const postAPI = <ResType, ReqType = unknown>({
-  path,
-  requestBody,
-  config,
-}: PostAPIParams<ReqType>) => service.post<ResType>(path, requestBody, config);
+// export const postAPI = <ResType, ReqType = unknown>({
+//   path,
+//   requestBody,
+//   config,
+// }: PostAPIParams<ReqType>) => service.post<ResType>(path, requestBody, config);
