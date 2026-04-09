@@ -1,8 +1,10 @@
-import { FormInput, Home } from '@tamagui/lucide-icons-2';
+import { Home, SquarePen } from 'lucide-react-native';
 import { Tabs } from 'expo-router';
-import type { GetThemeValueForKey } from 'tamagui';
+import { useThemeColor } from 'heroui-native';
 
 export default function TabLayout() {
+  const iconColor = useThemeColor('foreground');
+
   return (
     <Tabs
       screenOptions={{
@@ -16,7 +18,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => (
-            <Home color={color as GetThemeValueForKey<'color'>} />
+            <Home size={24} color={color ?? iconColor} />
           ),
         }}
       />
@@ -25,7 +27,7 @@ export default function TabLayout() {
         options={{
           title: 'Form',
           tabBarIcon: ({ color }) => (
-            <FormInput color={color as GetThemeValueForKey<'color'>} />
+            <SquarePen size={24} color={color ?? iconColor} />
           ),
         }}
       />

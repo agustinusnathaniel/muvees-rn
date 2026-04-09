@@ -1,6 +1,6 @@
-import '@tamagui/native/setup-teleport';
+import 'react-native-gesture-handler';
 
-import '^/tamagui-web.css';
+import '^/global.css';
 
 import {
   Nunito_200ExtraLight,
@@ -23,11 +23,13 @@ import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SWRConfig } from 'swr';
-import { TamaguiProvider } from 'tamagui';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {
+  HeroUINativeProvider,
+  type HeroUINativeConfig,
+} from 'heroui-native';
 
 import { useColorScheme } from '@/lib/hooks/use-color-scheme';
-
-import { config } from '^/tamagui.config';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -41,6 +43,13 @@ export const unstable_settings = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const heroUiNativeConfig: HeroUINativeConfig = {
+  textProps: {
+    minimumFontScale: 0.5,
+    maxFontSizeMultiplier: 1.4,
+  },
+};
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -72,26 +81,30 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <TamaguiProvider config={config} defaultTheme={colorScheme}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-        <SWRConfig
-          value={{
-            provider: () => new Map(),
-            isOnline() {
-              return true;
-            },
-            isVisible() {
-              return true;
-            },
-            initFocus() {},
-            initReconnect() {},
-          }}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HeroUINativeProvider config={heroUiNativeConfig}>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <AppStack />
-        </SWRConfig>
-      </ThemeProvider>
-    </TamaguiProvider>
+          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+          <SWRConfig
+            value={{
+              provider: () => new Map(),
+              isOnline() {
+                return true;
+              },
+              isVisible() {
+                return true;
+              },
+              initFocus() {},
+              initReconnect() {},
+            }}
+          >
+            <AppStack />
+          </SWRConfig>
+        </ThemeProvider>
+      </HeroUINativeProvider>
+    </GestureHandlerRootView>
   );
 }
 

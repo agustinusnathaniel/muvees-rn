@@ -1,8 +1,11 @@
 import useSWR, { type SWRConfiguration } from 'swr';
+import { shouldRetryApiError } from './error';
 import { type APIFetcherParams, getAPI } from './fetcher';
 
 const swrOptions: SWRConfiguration = {
-  shouldRetryOnError: false,
+  shouldRetryOnError: shouldRetryApiError,
+  errorRetryCount: 2,
+  errorRetryInterval: 1200,
   revalidateOnMount: true,
   revalidateOnReconnect: false,
   revalidateOnFocus: false,

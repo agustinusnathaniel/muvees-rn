@@ -39,5 +39,5 @@ export const useGetMovieList = ({
     isReady,
   });
 
-export const useMovieRecommendations = (id: number) =>
-  useGetAPI<MovieListResponse>({ path: `/movie/${id}/recommendations` });
+// export const useMovieRecommendations = (id: number) =>
+//   useGetAPI<MovieListResponse>({ path: `/movie/${id}/recommendations` });

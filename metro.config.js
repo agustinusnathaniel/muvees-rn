@@ -1,7 +1,15 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
+const { withUniwindConfig } = require('uniwind/metro');
+const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro-config');
 
-module.exports = getDefaultConfig(__dirname, {
-  // [Web-only]: Enables CSS support in Metro.
+const config = getDefaultConfig(__dirname, {
   isCSSEnabled: true,
 });
+
+module.exports = withUniwindConfig(
+  wrapWithReanimatedMetroConfig(config),
+  {
+    cssEntryFile: './global.css',
+    dtsFile: './src/uniwind-types.d.ts',
+  },
+);

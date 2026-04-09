@@ -8,14 +8,22 @@ export const useMovieListPage = () => {
   const {
     data: movieListData,
     isLoading: isLoadingMovieList,
+    isValidating: isValidatingMovieList,
+    error: movieListError,
     mutate: refreshMovieList,
   } = useGetMovieList({
     section,
   });
+  const hasMovieListData = Boolean(movieListData);
+  const isRefreshingMovieList = isValidatingMovieList && hasMovieListData;
+  const isInitialLoadingMovieList = isLoadingMovieList && !hasMovieListData;
 
   return {
     movieListData,
     isLoadingMovieList,
+    isInitialLoadingMovieList,
+    isRefreshingMovieList,
+    movieListError,
     refreshMovieList,
     section,
     setSection,

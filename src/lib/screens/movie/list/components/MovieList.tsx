@@ -1,12 +1,15 @@
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
-import { RefreshControl } from 'react-native';
-import { H4, Image, Text, View, XStack, YStack } from 'tamagui';
-import { Card } from 'tamagui';
+import { RefreshControl, View, Image, Pressable, Text } from 'react-native';
+import { Card, SkeletonGroup } from 'heroui-native';
 
 import { SelectInput } from '@/lib/components/SelectInput';
 import { useViewModelContext } from '@/lib/providers/ViewModel';
 import type { MovieListPageViewModel } from '@/lib/screens/movie/list/hooks';
+import {
+  buildTmdbImageUrl,
+  TMDB_IMAGE_SIZES,
+} from '@/lib/services/tmdb-api/image';
 import type { ListType } from '@/lib/services/tmdb-api/movies/getList/types';
 
 const sectionOptions: Array<{ label: string; value: ListType }> = [
@@ -16,10 +19,14 @@ const sectionOptions: Array<{ label: string; value: ListType }> = [
   { label: 'Upcoming', value: 'upcoming' },
 ];
 
+const loadingSkeletonKeys = ['1', '2', '3', '4'];
+
 const MovieList = () => {
   const {
     movieListData,
-    isLoadingMovieList,
+    isInitialLoadingMovieList,
+    isRefreshingMovieList,
+    movieListError,
     refreshMovieList,
     section,
     setSection,
@@ -30,13 +37,13 @@ const MovieList = () => {
       data={movieListData?.results}
       refreshControl={
         <RefreshControl
-          refreshing={isLoadingMovieList}
+          refreshing={isRefreshingMovieList}
           onRefresh={refreshMovieList}
         />
       }
       keyExtractor={(item) => item.id.toString()}
       ListHeaderComponent={() => (
-        <YStack p="$4">
+        <View className="gap-2 p-4">
           <SelectInput
             options={sectionOptions}
             getOptionLabel={(item) => item.label}
@@ -45,54 +52,102 @@ const MovieList = () => {
             onValueChange={(item) => setSection(item as ListType)}
             searchable
           />
-        </YStack>
+          {isRefreshingMovieList ? (
+            <Text className="text-xs text-muted">Refreshing movie list...</Text>
+          ) : null}
+        </View>
       )}
-      ItemSeparatorComponent={() => <View height={12} />}
-      ListFooterComponent={() => <View height={24} />}
-      renderItem={({ item }) => (
-        <Link
-          href={{ pathname: '/movie/[id]', params: { id: item.id } }}
-          asChild
-        >
-          <Card
-            marginHorizontal={16}
-            height={140}
-            elevation={2}
-            borderRadius={12}
-            overflow="hidden"
-            pressStyle={{ scale: 0.98, opacity: 0.9 }}
+      ItemSeparatorComponent={() => <View className="h-3" />}
+      ListFooterComponent={() => <View className="h-6" />}
+      ListEmptyComponent={() => (
+        <View className="px-4">
+          {movieListError ? null : isInitialLoadingMovieList ? (
+            <View className="gap-3">
+              {loadingSkeletonKeys.map((key) => (
+                <SkeletonGroup key={key} isLoading className="h-35">
+                  <Card className="h-35 flex-row overflow-hidden p-0">
+                    <SkeletonGroup.Item className="h-full w-25 rounded-l-xl" />
+                    <Card.Body className="flex-1 justify-between p-3">
+                      <View className="gap-2">
+                        <SkeletonGroup.Item className="h-4 w-11/12 rounded-md" />
+                        <SkeletonGroup.Item className="h-4 w-8/12 rounded-md" />
+                      </View>
+                      <View className="gap-2">
+                        <SkeletonGroup.Item className="h-3 w-full rounded-md" />
+                        <SkeletonGroup.Item className="h-3 w-10/12 rounded-md" />
+                        <SkeletonGroup.Item className="h-3 w-7/12 rounded-md" />
+                      </View>
+                    </Card.Body>
+                  </Card>
+                </SkeletonGroup>
+              ))}
+            </View>
+          ) : (
+            <Card className="p-4">
+              <Card.Body className="gap-2">
+                <Card.Title>No movies found</Card.Title>
+                <Card.Description>
+                  Try switching categories or pull to refresh.
+                </Card.Description>
+              </Card.Body>
+            </Card>
+          )}
+        </View>
+      )}
+      renderItem={({ item }) => {
+        const posterUri = buildTmdbImageUrl(
+          item.poster_path,
+          TMDB_IMAGE_SIZES.poster,
+        );
+
+        return (
+          <Link
+            href={{ pathname: '/movie/[id]', params: { id: item.id } }}
+            asChild
           >
-            <XStack>
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                width={100}
-                height={140}
-                objectFit="cover"
-              />
-              <Card.Header
-                flex={1}
-                p={12}
-                justify="space-between"
-              >
-                <H4
-                  numberOfLines={2}
-                  ellipsizeMode="tail"
-                >
-                  {item.title}
-                </H4>
-                <Text
-                  fontSize="$3"
-                  color="$gray10"
-                  ellipsizeMode="tail"
-                  numberOfLines={3}
-                >
-                  {item.overview}
-                </Text>
-              </Card.Header>
-            </XStack>
-          </Card>
-        </Link>
-      )}
+            <Pressable
+              className="mx-4 active:opacity-90"
+              hitSlop={6}
+              accessibilityRole="button"
+              accessibilityLabel={`Open details for ${item.title}`}
+              accessibilityHint="Navigates to the movie details screen"
+            >
+              <Card className="h-35 flex-row overflow-hidden p-0">
+                {posterUri ? (
+                  <Image
+                    source={{ uri: posterUri }}
+                    className="h-35 w-25 rounded-l-xl"
+                    resizeMode="cover"
+                    accessible={false}
+                  />
+                ) : (
+                  <View className="h-35 w-25 items-center justify-center rounded-l-xl bg-surface-secondary px-2">
+                    <Text className="text-center text-xs text-muted">
+                      No poster
+                    </Text>
+                  </View>
+                )}
+                <Card.Body className="flex-1 justify-between p-3">
+                  <Card.Title
+                    className="text-base leading-5"
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
+                    {item.title}
+                  </Card.Title>
+                  <Card.Description
+                    className="text-sm"
+                    numberOfLines={3}
+                    ellipsizeMode="tail"
+                  >
+                    {item.overview || 'No synopsis available.'}
+                  </Card.Description>
+                </Card.Body>
+              </Card>
+            </Pressable>
+          </Link>
+        );
+      }}
     />
   );
 };
