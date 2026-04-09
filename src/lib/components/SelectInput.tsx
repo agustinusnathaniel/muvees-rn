@@ -32,9 +32,6 @@ export const SelectInput = <Option,>({
 }: SelectInputProps<Option>) => {
   const [keyword, setKeyword] = useState('');
   const fieldColor = useThemeColor('field-foreground');
-  const placeholderColor = useThemeColor('field-placeholder');
-  const borderColor = useThemeColor('field-border');
-  const fieldBgColor = useThemeColor('field');
 
   const selectedItem = options.find((item) => getOptionValue(item) === value);
   const valueLabel = selectedItem ? getOptionLabel(selectedItem) : '';
@@ -96,19 +93,14 @@ export const SelectInput = <Option,>({
                 value={keyword}
                 onChangeText={setKeyword}
                 placeholder="Search..."
-                placeholderTextColor={placeholderColor}
-                className="h-10 px-3 rounded-xl border"
-                style={{
-                  color: fieldColor,
-                  backgroundColor: fieldBgColor,
-                  borderColor: borderColor,
-                }}
+                placeholderTextColorClassName="accent-field-placeholder"
+                className="h-10 rounded-xl border border-field-border bg-field-background px-3 text-field-foreground"
               />
             </View>
           ) : null}
           <ScrollView
             keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 24 }}
+            contentContainerClassName="px-2 pb-6"
           >
             {filteredOptions.map((item) => {
               const itemValue = getOptionValue(item);

@@ -24,7 +24,10 @@ import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SWRConfig } from 'swr';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { HeroUINativeProvider } from 'heroui-native/provider';
+import {
+  HeroUINativeProvider,
+  type HeroUINativeConfig,
+} from 'heroui-native';
 
 import { useColorScheme } from '@/lib/hooks/use-color-scheme';
 
@@ -40,6 +43,13 @@ export const unstable_settings = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const heroUiNativeConfig: HeroUINativeConfig = {
+  textProps: {
+    minimumFontScale: 0.5,
+    maxFontSizeMultiplier: 1.4,
+  },
+};
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -72,7 +82,7 @@ function RootLayoutNav() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <HeroUINativeProvider>
+      <HeroUINativeProvider config={heroUiNativeConfig}>
         <ThemeProvider
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >

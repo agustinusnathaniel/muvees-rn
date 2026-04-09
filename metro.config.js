@@ -7,8 +7,9 @@ const config = getDefaultConfig(__dirname, {
 });
 
 module.exports = withUniwindConfig(
-  wrapWithReanimatedMetroConfig(config, {
+  wrapWithReanimatedMetroConfig(config),
+  {
     cssEntryFile: './global.css',
     dtsFile: './src/uniwind-types.d.ts',
-  }),
+  },
 );
