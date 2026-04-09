@@ -3575,14 +3575,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.12.0":
-  version: 1.12.0
-  resolution: "axios@npm:1.12.0"
+"axios@npm:1.13.5":
+  version: 1.13.5
+  resolution: "axios@npm:1.13.5"
   dependencies:
     follow-redirects: "npm:^1.15.11"
     form-data: "npm:^4.0.5"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10/6c45e294b6ee72f832dbee94cb3fe7331bf2961874fa6b656d909a93b3574c59281f0c62eb92baf7b3e4f39be71936c9f1fcbbe494c90f7ff4d7cc2d7932f06d
+  checksum: 10/db726d09902565ef9a0632893530028310e2ec2b95b727114eca1b101450b00014133dfc3871cffc87983fb922bca7e4874d7e2826d1550a377a157cdf3f05b6
   languageName: node
   linkType: hard
 
@@ -7907,7 +7907,7 @@ __metadata:
     "@react-navigation/native": "npm:^7.1.33"
     "@shopify/flash-list": "npm:2.0.2"
     "@types/react": "npm:~19.2.10"
-    axios: "npm:1.12.0"
+    axios: "npm:1.13.5"
     babel-preset-expo: "npm:~55.0.8"
     commit-and-tag-version: "npm:^12.7.1"
     cross-env: "npm:^10.1.0"
