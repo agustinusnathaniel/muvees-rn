@@ -24,8 +24,9 @@ const loadingSkeletonKeys = ['1', '2', '3', '4'];
 const MovieList = () => {
   const {
     movieListData,
-    isLoadingMovieList,
+    isInitialLoadingMovieList,
     isRefreshingMovieList,
+    movieListError,
     refreshMovieList,
     section,
     setSection,
@@ -36,7 +37,7 @@ const MovieList = () => {
       data={movieListData?.results}
       refreshControl={
         <RefreshControl
-          refreshing={isLoadingMovieList}
+          refreshing={isRefreshingMovieList}
           onRefresh={refreshMovieList}
         />
       }
@@ -60,7 +61,7 @@ const MovieList = () => {
       ListFooterComponent={() => <View className="h-6" />}
       ListEmptyComponent={() => (
         <View className="px-4">
-          {isLoadingMovieList ? (
+          {movieListError ? null : isInitialLoadingMovieList ? (
             <View className="gap-3">
               {loadingSkeletonKeys.map((key) => (
                 <SkeletonGroup key={key} isLoading className="h-35">

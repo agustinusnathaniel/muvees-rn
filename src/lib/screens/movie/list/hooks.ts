@@ -14,11 +14,14 @@ export const useMovieListPage = () => {
   } = useGetMovieList({
     section,
   });
-  const isRefreshingMovieList = isValidatingMovieList && !!movieListData;
+  const hasMovieListData = Boolean(movieListData);
+  const isRefreshingMovieList = isValidatingMovieList && hasMovieListData;
+  const isInitialLoadingMovieList = isLoadingMovieList && !hasMovieListData;
 
   return {
     movieListData,
     isLoadingMovieList,
+    isInitialLoadingMovieList,
     isRefreshingMovieList,
     movieListError,
     refreshMovieList,

@@ -11,11 +11,11 @@ export const MovieListScreen = () => {
   const viewModel = useMovieListPage();
   const {
     movieListData,
-    isLoadingMovieList,
+    isInitialLoadingMovieList,
     movieListError,
     refreshMovieList,
   } = viewModel;
-  const showBlockingLoader = isLoadingMovieList && !movieListData;
+  const showBlockingLoader = isInitialLoadingMovieList;
   const movieListErrorMessage = movieListError
     ? getApiErrorMessage(
         movieListError,
@@ -52,7 +52,7 @@ export const MovieListScreen = () => {
             <Spinner size="lg" />
           </View>
         )}
-        <MovieList />
+        {movieListError && !movieListData ? null : <MovieList />}
       </View>
     </ViewModelProvider>
   );
