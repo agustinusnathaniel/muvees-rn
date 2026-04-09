@@ -6751,6 +6751,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ky@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "ky@npm:2.0.0"
+  checksum: 10/f150b8910778f0b6e5f2a4e5cef1377fc2162d0ebb060bb1b64fe8a8b43ba0255d9aaa1f4266a012750d989e475a92ae82d0cc8a535501eafa5a0ddbc9dded33
+  languageName: node
+  linkType: hard
+
 "lan-network@npm:^0.2.0":
   version: 0.2.0
   resolution: "lan-network@npm:0.2.0"
@@ -7926,6 +7933,7 @@ __metadata:
     heroui-native: "npm:^1.0.1"
     husky: "npm:^9.1.7"
     knip: "npm:^6.3.1"
+    ky: "npm:^2.0.0"
     lint-staged: "npm:^16.4.0"
     lucide-react-native: "npm:^1.7.0"
     react: "npm:19.2.0"

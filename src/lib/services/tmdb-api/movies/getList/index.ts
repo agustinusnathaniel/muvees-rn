@@ -33,9 +33,16 @@ export const useGetMovieList = ({
       query: params?.query,
       with_genres: params?.with_genres,
     }),
-    config: {
-      params,
-    },
+    config: params
+      ? {
+          searchParams: {
+            ...params,
+            ...(Array.isArray(params.with_genres)
+              ? { with_genres: params.with_genres.join(',') }
+              : {}),
+          } as Record<string, string | number | boolean>,
+        }
+      : undefined,
     isReady,
   });
 
