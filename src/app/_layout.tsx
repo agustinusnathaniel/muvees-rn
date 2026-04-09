@@ -1,6 +1,6 @@
-import '@tamagui/native/setup-teleport';
+import 'react-native-gesture-handler';
 
-import '^/tamagui-web.css';
+import '^/global.css';
 
 import {
   Nunito_200ExtraLight,
@@ -23,11 +23,10 @@ import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SWRConfig } from 'swr';
-import { TamaguiProvider } from 'tamagui';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { HeroUINativeProvider } from 'heroui-native/provider';
 
 import { useColorScheme } from '@/lib/hooks/use-color-scheme';
-
-import { config } from '^/tamagui.config';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -72,26 +71,30 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <TamaguiProvider config={config} defaultTheme={colorScheme}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-        <SWRConfig
-          value={{
-            provider: () => new Map(),
-            isOnline() {
-              return true;
-            },
-            isVisible() {
-              return true;
-            },
-            initFocus() {},
-            initReconnect() {},
-          }}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HeroUINativeProvider>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <AppStack />
-        </SWRConfig>
-      </ThemeProvider>
-    </TamaguiProvider>
+          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+          <SWRConfig
+            value={{
+              provider: () => new Map(),
+              isOnline() {
+                return true;
+              },
+              isVisible() {
+                return true;
+              },
+              initFocus() {},
+              initReconnect() {},
+            }}
+          >
+            <AppStack />
+          </SWRConfig>
+        </ThemeProvider>
+      </HeroUINativeProvider>
+    </GestureHandlerRootView>
   );
 }
 

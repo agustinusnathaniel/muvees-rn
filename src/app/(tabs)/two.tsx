@@ -1,26 +1,21 @@
-import { Input, Label, View, YStack } from 'tamagui';
+import { View } from 'react-native';
+import { TextField, Input, Label } from 'heroui-native';
 
 export default function TabTwoScreen() {
   return (
-    <View flex={1} items="center">
-      <YStack px="$4" fullscreen>
-        <YStack>
-          <Label>Name</Label>
-          <Input placeholder="Hello" />
-        </YStack>
-        <YStack>
-          <Label>Password</Label>
-          <Input type="password" placeholder="Hello" />
-        </YStack>
-        {/* <YStack>
-          <Label>E-Mail</Label>
-          <Input
-            textContentType="password"
-            type="password"
-            placeholder="Hello"
-          />
-        </YStack> */}
-      </YStack>
+    <View className="flex-1 items-center">
+      <View className="px-4 w-full h-full">
+        <View className="gap-4">
+          <TextField>
+            <Label>Name</Label>
+            <Input placeholder="Hello" />
+          </TextField>
+          <TextField>
+            <Label>Password</Label>
+            <Input placeholder="Hello" secureTextEntry />
+          </TextField>
+        </View>
+      </View>
     </View>
   );
 }

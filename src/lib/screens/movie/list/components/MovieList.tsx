@@ -1,8 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
-import { RefreshControl } from 'react-native';
-import { H4, Image, Text, View, XStack, YStack } from 'tamagui';
-import { Card } from 'tamagui';
+import { RefreshControl, View, Image, Pressable, Text } from 'react-native';
+import { useThemeColor } from 'heroui-native';
 
 import { SelectInput } from '@/lib/components/SelectInput';
 import { useViewModelContext } from '@/lib/providers/ViewModel';
@@ -24,6 +23,9 @@ const MovieList = () => {
     section,
     setSection,
   } = useViewModelContext<MovieListPageViewModel>();
+  const mutedColor = useThemeColor('muted');
+  const surfaceFgColor = useThemeColor('surface-foreground');
+  const surfaceBg = useThemeColor('surface');
 
   return (
     <FlashList
@@ -36,7 +38,7 @@ const MovieList = () => {
       }
       keyExtractor={(item) => item.id.toString()}
       ListHeaderComponent={() => (
-        <YStack p="$4">
+        <View className="p-4">
           <SelectInput
             options={sectionOptions}
             getOptionLabel={(item) => item.label}
@@ -45,52 +47,44 @@ const MovieList = () => {
             onValueChange={(item) => setSection(item as ListType)}
             searchable
           />
-        </YStack>
+        </View>
       )}
-      ItemSeparatorComponent={() => <View height={12} />}
-      ListFooterComponent={() => <View height={24} />}
+      ItemSeparatorComponent={() => <View className="h-3" />}
+      ListFooterComponent={() => <View className="h-6" />}
       renderItem={({ item }) => (
         <Link
           href={{ pathname: '/movie/[id]', params: { id: item.id } }}
           asChild
         >
-          <Card
-            marginHorizontal={16}
-            height={140}
-            elevation={2}
-            borderRadius={12}
-            overflow="hidden"
-            pressStyle={{ scale: 0.98, opacity: 0.9 }}
-          >
-            <XStack>
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                width={100}
-                height={140}
-                objectFit="cover"
-              />
-              <Card.Header
-                flex={1}
-                p={12}
-                justify="space-between"
-              >
-                <H4
-                  numberOfLines={2}
-                  ellipsizeMode="tail"
-                >
-                  {item.title}
-                </H4>
-                <Text
-                  fontSize="$3"
-                  color="$gray10"
-                  ellipsizeMode="tail"
-                  numberOfLines={3}
-                >
-                  {item.overview}
-                </Text>
-              </Card.Header>
-            </XStack>
-          </Card>
+          <Pressable>
+            <View className="mx-4 h-35 rounded-xl overflow-hidden" style={{ backgroundColor: surfaceBg }}>
+              <View className="flex-row flex-1">
+                <Image
+                  source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
+                  className="w-25 h-35 rounded-tl-xl rounded-bl-xl"
+                  resizeMode="cover"
+                />
+                <View className="flex-1 p-3 justify-between">
+                  <Text
+                    className="text-base font-semibold"
+                    style={{ color: surfaceFgColor, lineHeight: 20 }}
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    className="text-sm"
+                    numberOfLines={3}
+                    ellipsizeMode="tail"
+                    style={{ color: mutedColor }}
+                  >
+                    {item.overview}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Pressable>
         </Link>
       )}
     />

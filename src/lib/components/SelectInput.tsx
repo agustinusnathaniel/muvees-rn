@@ -1,15 +1,24 @@
-import { Check, ChevronDown } from '@tamagui/lucide-icons-2';
-import { type ReactNode, useMemo, useState } from 'react';
-import { Adapt, Input, Select, type SelectProps, Sheet, View } from 'tamagui';
+import { Check } from 'lucide-react-native';
+import { useMemo, useState, useCallback } from 'react';
+import { TextInput, ScrollView, Keyboard, View } from 'react-native';
+import { Select } from 'heroui-native';
+import { useThemeColor } from 'heroui-native';
+
+type SelectOptionValue = {
+  value: string;
+  label: string;
+};
 
 type SelectInputProps<Option> = {
   options: Array<Option>;
   getOptionLabel: (option: Option) => string;
   getOptionValue: (option: Option) => string;
   onSelect?: (selectedEntry: Option) => void;
-  placeholder?: ReactNode;
+  placeholder?: string;
   searchable?: boolean;
-} & SelectProps;
+  value?: string;
+  onValueChange?: (value: string) => void;
+};
 
 export const SelectInput = <Option,>({
   options,
@@ -18,98 +27,115 @@ export const SelectInput = <Option,>({
   onSelect,
   placeholder,
   searchable,
-  ...props
+  value,
+  onValueChange,
 }: SelectInputProps<Option>) => {
   const [keyword, setKeyword] = useState('');
+  const fieldColor = useThemeColor('field-foreground');
+  const placeholderColor = useThemeColor('field-placeholder');
+  const borderColor = useThemeColor('field-border');
+  const fieldBgColor = useThemeColor('field');
 
-  const selectedItem = options.find(
-    (item) => getOptionValue(item) === props.value,
-  );
-  const valueLabel = selectedItem ? getOptionLabel(selectedItem) : null;
+  const selectedItem = options.find((item) => getOptionValue(item) === value);
+  const valueLabel = selectedItem ? getOptionLabel(selectedItem) : '';
 
   const filteredOptions = useMemo(
     () =>
       options.filter((item) =>
         getOptionLabel(item).toLowerCase().includes(keyword.toLowerCase()),
       ),
-    [getOptionLabel, options, keyword],
-  );
-  const selectOptionItems = useMemo(
-    () =>
-      filteredOptions.map((item, idx) => {
-        const value = getOptionValue(item);
-        const label = getOptionLabel(item);
-        return (
-          <Select.Item
-            index={idx}
-            value={value}
-            key={value}
-            onPress={() => {
-              onSelect?.(item);
-            }}
-          >
-            <Select.ItemText>{label}</Select.ItemText>
-            <Select.ItemIndicator marginLeft="auto">
-              <Check size={16} />
-            </Select.ItemIndicator>
-          </Select.Item>
-        );
-      }),
-    [getOptionLabel, getOptionValue, onSelect, filteredOptions],
+    [options, keyword, getOptionLabel],
   );
 
-  const resetKeyword = () => setKeyword('');
+  const handleValueChange = useCallback(
+    (newValue: SelectOptionValue | undefined) => {
+      if (newValue?.value) {
+        const selectedOption = options.find(
+          (item) => getOptionValue(item) === newValue.value,
+        );
+        if (selectedOption) {
+          onSelect?.(selectedOption);
+        }
+        onValueChange?.(newValue.value);
+      }
+      setKeyword('');
+    },
+    [options, getOptionValue, onSelect, onValueChange],
+  );
+
+  const handleOpenChange = useCallback((open: boolean) => {
+    if (!open) {
+      setKeyword('');
+      Keyboard.dismiss();
+    }
+  }, []);
+
+  // Build the current value object for HeroUI Select
+  // HeroUI Select expects value as { value: string; label: string } | undefined
+  const currentValue: SelectOptionValue | undefined = value
+    ? { value, label: valueLabel }
+    : undefined;
 
   return (
     <Select
-      defaultValue=""
-      disablePreventBodyScroll
-      onOpenChange={resetKeyword}
-      {...props}
+      value={currentValue}
+      onValueChange={handleValueChange}
+      onOpenChange={handleOpenChange}
+      presentation="bottom-sheet"
     >
-      <Select.Trigger iconAfter={ChevronDown}>
-        <Select.Value fontWeight="700" placeholder={placeholder}>
-          {valueLabel}
-        </Select.Value>
+      <Select.Trigger>
+        <Select.Value placeholder={placeholder ?? 'Select...'} className="font-semibold" />
+        <Select.TriggerIndicator />
       </Select.Trigger>
-
-      <Adapt when="max-md" platform="touch">
-        <Sheet
-          modal
-          dismissOnSnapToBottom
-          moveOnKeyboardChange
-          forceRemoveScrollEnabled
-          unmountChildrenWhenHidden
-          snapPointsMode="fit"
-        >
-          <Sheet.Overlay opacity={0.8} transition="lazy" />
-          <Sheet.Handle />
-          <Sheet.Frame>
-            {searchable ? (
-              <Input
-                m="$4"
-                placeholder="Search..."
-                onChangeText={setKeyword}
+      <Select.Portal>
+        <Select.Overlay />
+        <Select.Content presentation="bottom-sheet" snapPoints={['45%']}>
+          {searchable ? (
+            <View className="px-4 pt-3 pb-1">
+              <TextInput
                 value={keyword}
+                onChangeText={setKeyword}
+                placeholder="Search..."
+                placeholderTextColor={placeholderColor}
+                className="h-10 px-3 rounded-xl border"
+                style={{
+                  color: fieldColor,
+                  backgroundColor: fieldBgColor,
+                  borderColor: borderColor,
+                }}
               />
-            ) : null}
-            <Sheet.ScrollView scrollEnabled={filteredOptions.length > 6}>
-              <Select.Adapt.Contents />
-              <View height="$4" />
-            </Sheet.ScrollView>
-          </Sheet.Frame>
-        </Sheet>
-      </Adapt>
+            </View>
+          ) : null}
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 24 }}
+          >
+            {filteredOptions.map((item) => {
+              const itemValue = getOptionValue(item);
+              const itemLabel = getOptionLabel(item);
+              const isSelected = itemValue === value;
 
-      <Select.Content>
-        <Select.ScrollUpButton />
-        <Select.Viewport>
-          <Select.Group>
-            {selectOptionItems}
-          </Select.Group>
-        </Select.Viewport>
-        <Select.ScrollDownButton />
-      </Select.Content>
+              return (
+                <Select.Item
+                  key={itemValue}
+                  value={itemValue}
+                  label={itemLabel}
+                  className="py-3 px-3"
+                >
+                  <Select.ItemLabel
+                    className={isSelected ? 'font-bold' : undefined}
+                  />
+                  {isSelected && (
+                    <Select.ItemIndicator>
+                      <Check size={18} color={fieldColor} />
+                    </Select.ItemIndicator>
+                  )}
+                </Select.Item>
+              );
+            })}
+          </ScrollView>
+        </Select.Content>
+      </Select.Portal>
     </Select>
   );
 };

@@ -1,4 +1,4 @@
-import { Spinner, View } from 'tamagui';
+import { View, ActivityIndicator } from 'react-native';
 
 import { ViewModelProvider } from '@/lib/providers/ViewModel';
 
@@ -11,8 +11,12 @@ export const MovieListScreen = () => {
 
   return (
     <ViewModelProvider {...viewModel}>
-      <View flex={1}>
-        {isLoadingMovieList ? <Spinner /> : null}
+      <View className="flex-1">
+        {isLoadingMovieList && (
+          <View className="absolute inset-0 items-center justify-center">
+            <ActivityIndicator size="large" />
+          </View>
+        )}
         <MovieList />
       </View>
     </ViewModelProvider>

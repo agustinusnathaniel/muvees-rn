@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+@import 'uniwind';
+@import 'heroui-native/styles';
+
+@source './node_modules/heroui-native/lib';
+
+@theme {
+  --font-normal: 'Nunito';
+  --font-medium: 'NunitoMedium';
+  --font-semibold: 'NunitoSemiBold';
+  --font-bold: 'NunitoBold';
+  --font-extrabold: 'NunitoExtraBold';
+  --radius: 0.75rem;
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --background: oklch(100% 0 0);
+      --foreground: oklch(14.304% 0.00261 285.823);
+      --surface: oklch(100% 0 0);
+      --surface-foreground: oklch(14.304% 0.00261 285.823);
+      --surface-secondary: oklch(96.756% 0.00118 286.375);
+      --surface-secondary-foreground: oklch(29.458% 0.00261 285.823);
+      --surface-tertiary: oklch(93.509% 0.00227 286.032);
+      --surface-tertiary-foreground: oklch(44.227% 0.00251 285.786);
+      --overlay: oklch(100% 0 0);
+      --overlay-foreground: oklch(14.304% 0.00261 285.823);
+      --backdrop: oklch(0% 0 0 / 40%);
+      --muted: oklch(55.17% 0.00179 286.033);
+      --default: oklch(96.756% 0.00118 286.375);
+      --default-foreground: oklch(29.458% 0.00261 285.823);
+      --accent: oklch(72% 0.14 45);
+      --accent-foreground: oklch(100% 0 0);
+      --field-background: oklch(100% 0 0);
+      --field-foreground: oklch(14.304% 0.00261 285.823);
+      --field-placeholder: oklch(55.17% 0.00179 286.033);
+      --field-border: oklch(86.616% 0.00209 286.192);
+      --field-shadow: oklch(0% 0 0 / 6%);
+      --success: oklch(65% 0.18 145);
+      --success-foreground: oklch(100% 0 0);
+      --warning: oklch(78% 0.16 85);
+      --warning-foreground: oklch(0% 0 0);
+      --danger: oklch(60% 0.20 25);
+      --danger-foreground: oklch(100% 0 0);
+      --border: oklch(86.616% 0.00209 286.192);
+      --separator: oklch(86.616% 0.00209 286.192);
+      --focus: oklch(72% 0.14 45);
+      --link: oklch(72% 0.14 45);
+      --surface-shadow: 0 1px 3px 0 oklch(0% 0 0 / 10%), 0 1px 2px -1px oklch(0% 0 0 / 10%);
+      --overlay-shadow: 0 10px 15px -3px oklch(0% 0 0 / 10%), 0 4px 6px -4px oklch(0% 0 0 / 10%);
+    }
+    @variant dark {
+      --background: oklch(14.304% 0.00261 285.823);
+      --foreground: oklch(96.756% 0.00118 286.375);
+      --surface: oklch(20.5% 0.00261 285.823);
+      --surface-foreground: oklch(96.756% 0.00118 286.375);
+      --surface-secondary: oklch(24.5% 0.00261 285.823);
+      --surface-secondary-foreground: oklch(86.616% 0.00209 286.192);
+      --surface-tertiary: oklch(29.458% 0.00261 285.823);
+      --surface-tertiary-foreground: oklch(73.624% 0.00216 286.133);
+      --overlay: oklch(20.5% 0.00261 285.823);
+      --overlay-foreground: oklch(96.756% 0.00118 286.375);
+      --backdrop: oklch(0% 0 0 / 60%);
+      --muted: oklch(55.17% 0.00179 286.033);
+      --default: oklch(24.5% 0.00261 285.823);
+      --default-foreground: oklch(86.616% 0.00209 286.192);
+      --accent: oklch(72% 0.14 45);
+      --accent-foreground: oklch(0% 0 0);
+      --field-background: oklch(20.5% 0.00261 285.823);
+      --field-foreground: oklch(96.756% 0.00118 286.375);
+      --field-placeholder: oklch(55.17% 0.00179 286.033);
+      --field-border: oklch(29.458% 0.00261 285.823);
+      --field-shadow: oklch(0% 0 0 / 20%);
+      --success: oklch(65% 0.18 145);
+      --success-foreground: oklch(0% 0 0);
+      --warning: oklch(78% 0.16 85);
+      --warning-foreground: oklch(0% 0 0);
+      --danger: oklch(60% 0.20 25);
+      --danger-foreground: oklch(100% 0 0);
+      --border: oklch(29.458% 0.00261 285.823);
+      --separator: oklch(29.458% 0.00261 285.823);
+      --focus: oklch(72% 0.14 45);
+      --link: oklch(72% 0.14 45);
+      --surface-shadow: 0 1px 3px 0 oklch(0% 0 0 / 30%), 0 1px 2px -1px oklch(0% 0 0 / 30%);
+      --overlay-shadow: 0 10px 15px -3px oklch(0% 0 0 / 30%), 0 4px 6px -4px oklch(0% 0 0 / 30%);
+    }
+  }
+}

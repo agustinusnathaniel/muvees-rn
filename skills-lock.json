@@ -5,6 +5,11 @@
       "source": "heroui-inc/heroui",
       "sourceType": "github",
       "computedHash": "f677f5246f10d5a754e2b45fda92e4edd4a7121ec7b568f316d352e5dce2fd13"
+    },
+    "uniwind": {
+      "source": "uni-stack/uniwind",
+      "sourceType": "github",
+      "computedHash": "76e8e9be3a60fe60d9229c7a0c6e4c30bdde2e23ff377dbfa827b80226bd4d89"
     }
   }
 }
