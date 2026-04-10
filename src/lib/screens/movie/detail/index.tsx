@@ -31,6 +31,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
+import { StaggeredGroup } from '@/lib/components/StaggeredGroup';
 import { getApiErrorMessage } from '@/lib/services/tmdb-api/error';
 import {
   TMDB_IMAGE_SIZES,
@@ -202,158 +203,165 @@ const MovieDetailScreen = () => {
           ) : null}
           {data ? (
             <>
-              {/* Backdrop */}
-              {backdropUri ? (
-                <Image
-                  source={{ uri: backdropUri }}
-                  className="h-52 w-full rounded-2xl"
-                  resizeMode="cover"
-                  accessibilityRole="image"
-                  accessibilityLabel={`${data.title} backdrop`}
-                />
-              ) : (
-                <View className="h-52 w-full items-center justify-center rounded-2xl bg-surface-secondary">
-                  <Text className="text-sm text-muted">
-                    Backdrop unavailable
-                  </Text>
-                </View>
-              )}
+              <StaggeredGroup>
+                {/* Backdrop */}
+                {backdropUri ? (
+                  <Image
+                    source={{ uri: backdropUri }}
+                    className="h-52 w-full rounded-2xl"
+                    resizeMode="cover"
+                    accessibilityRole="image"
+                    accessibilityLabel={`${data.title} backdrop`}
+                  />
+                ) : (
+                  <View className="h-52 w-full items-center justify-center rounded-2xl bg-surface-secondary">
+                    <Text className="text-sm text-muted">
+                      Backdrop unavailable
+                    </Text>
+                  </View>
+                )}
 
-              {/* Trailer Button */}
-              {trailer ? (
-                <Button variant="outline" size="md" onPress={openTrailer}>
-                  <Play size={16} />
-                  <Button.Label>Watch Trailer</Button.Label>
-                </Button>
-              ) : null}
+                {/* Trailer Button */}
+                {trailer ? (
+                  <Button variant="outline" size="md" onPress={openTrailer}>
+                    <Play size={16} />
+                    <Button.Label>Watch Trailer</Button.Label>
+                  </Button>
+                ) : null}
 
-              {/* Movie Info Card */}
-              <Card className="gap-4">
-                <Card.Body className="gap-4">
-                  <View className="flex-row items-start gap-3">
-                    {posterUri ? (
-                      <Image
-                        source={{ uri: posterUri }}
-                        className="rounded-xl"
-                        style={{ width: posterWidth, height: posterHeight }}
-                        resizeMode="cover"
-                        accessible={false}
-                      />
-                    ) : (
+                {/* Movie Info Card */}
+                <Card className="gap-4">
+                  <Card.Body className="gap-4">
+                    <View className="flex-row items-start gap-3">
+                      {posterUri ? (
+                        <Image
+                          source={{ uri: posterUri }}
+                          className="rounded-xl"
+                          style={{ width: posterWidth, height: posterHeight }}
+                          resizeMode="cover"
+                          accessible={false}
+                        />
+                      ) : (
+                        <View
+                          className="items-center justify-center rounded-xl bg-surface-secondary px-2"
+                          style={{ width: posterWidth, height: posterHeight }}
+                        >
+                          <Text className="text-center text-xs text-muted">
+                            No poster
+                          </Text>
+                        </View>
+                      )}
                       <View
-                        className="items-center justify-center rounded-xl bg-surface-secondary px-2"
-                        style={{ width: posterWidth, height: posterHeight }}
+                        className="flex-1 justify-center gap-2"
+                        style={{ minWidth: 0 }}
                       >
-                        <Text className="text-center text-xs text-muted">
-                          No poster
-                        </Text>
-                      </View>
-                    )}
-                    <View
-                      className="flex-1 justify-center gap-2"
-                      style={{ minWidth: 0 }}
-                    >
-                      <Card.Title
-                        className="text-2xl leading-7"
-                        numberOfLines={3}
-                      >
-                        {data.title}
-                      </Card.Title>
-                      {data.tagline ? (
-                        <Card.Description className="italic" numberOfLines={2}>
-                          {data.tagline}
-                        </Card.Description>
-                      ) : null}
-                      {data.release_date ? (
-                        <Card.Description>
-                          {dayjs(data.release_date).format('DD MMM YYYY')}
-                        </Card.Description>
-                      ) : null}
-                    </View>
-                  </View>
-
-                  {/* Genres */}
-                  {data.genres?.length ? (
-                    <View className="flex-row flex-wrap gap-2">
-                      {data.genres.map((genre) => (
-                        <Chip
-                          key={genre.id}
-                          variant="soft"
-                          color="accent"
-                          size="sm"
-                          accessibilityRole="text"
-                          accessibilityLabel={`Genre ${genre.name}`}
+                        <Card.Title
+                          className="text-2xl leading-7"
+                          numberOfLines={3}
                         >
-                          <Chip.Label>{genre.name}</Chip.Label>
-                        </Chip>
-                      ))}
+                          {data.title}
+                        </Card.Title>
+                        {data.tagline ? (
+                          <Card.Description
+                            className="italic"
+                            numberOfLines={2}
+                          >
+                            {data.tagline}
+                          </Card.Description>
+                        ) : null}
+                        {data.release_date ? (
+                          <Card.Description>
+                            {dayjs(data.release_date).format('DD MMM YYYY')}
+                          </Card.Description>
+                        ) : null}
+                      </View>
                     </View>
-                  ) : null}
 
-                  {/* Rating & Runtime Row */}
-                  <View className="flex-row flex-wrap items-center gap-4">
-                    <View className="flex-row items-center gap-1.5">
-                      <Star
-                        size={16}
-                        color="rgb(250 204 21)"
-                        fill="rgb(250 204 21)"
-                      />
-                      <Text className="text-sm font-semibold text-foreground">
-                        {data.vote_average.toFixed(1)}
-                      </Text>
-                      <Text className="text-xs text-muted">
-                        ({data.vote_count.toLocaleString()})
-                      </Text>
-                    </View>
-                    {data.runtime ? (
-                      <View className="flex-row items-center gap-1.5">
-                        <Clock size={14} color="rgb(163 163 163)" />
-                        <Text className="text-sm text-foreground">
-                          {runtimeHours ? `${runtimeHours}h ` : ''}
-                          {runtimeMins ?? 0}m
-                        </Text>
+                    {/* Genres */}
+                    {data.genres?.length ? (
+                      <View className="flex-row flex-wrap gap-2">
+                        {data.genres.map((genre) => (
+                          <Chip
+                            key={genre.id}
+                            variant="soft"
+                            color="accent"
+                            size="sm"
+                            accessibilityRole="text"
+                            accessibilityLabel={`Genre ${genre.name}`}
+                          >
+                            <Chip.Label>{genre.name}</Chip.Label>
+                          </Chip>
+                        ))}
                       </View>
                     ) : null}
-                    {director ? (
+
+                    {/* Rating & Runtime Row */}
+                    <View className="flex-row flex-wrap items-center gap-4">
                       <View className="flex-row items-center gap-1.5">
-                        <Globe size={14} color="rgb(163 163 163)" />
-                        <Text
-                          className="text-sm text-foreground"
-                          numberOfLines={1}
-                        >
-                          Dir: {director.name}
+                        <Star
+                          size={16}
+                          color="rgb(250 204 21)"
+                          fill="rgb(250 204 21)"
+                        />
+                        <Text className="text-sm font-semibold text-foreground">
+                          {data.vote_average.toFixed(1)}
+                        </Text>
+                        <Text className="text-xs text-muted">
+                          ({data.vote_count.toLocaleString()})
                         </Text>
                       </View>
-                    ) : null}
-                  </View>
-
-                  {/* Status & Language */}
-                  <View className="flex-row flex-wrap gap-x-4 gap-y-1">
-                    <View className="flex-row items-center gap-1.5">
-                      <Calendar size={14} color="rgb(163 163 163)" />
-                      <Text className="text-xs text-muted">{data.status}</Text>
+                      {data.runtime ? (
+                        <View className="flex-row items-center gap-1.5">
+                          <Clock size={14} color="rgb(163 163 163)" />
+                          <Text className="text-sm text-foreground">
+                            {runtimeHours ? `${runtimeHours}h ` : ''}
+                            {runtimeMins ?? 0}m
+                          </Text>
+                        </View>
+                      ) : null}
+                      {director ? (
+                        <View className="flex-row items-center gap-1.5">
+                          <Globe size={14} color="rgb(163 163 163)" />
+                          <Text
+                            className="text-sm text-foreground"
+                            numberOfLines={1}
+                          >
+                            Dir: {director.name}
+                          </Text>
+                        </View>
+                      ) : null}
                     </View>
-                    {data.original_language ? (
+
+                    {/* Status & Language */}
+                    <View className="flex-row flex-wrap gap-x-4 gap-y-1">
                       <View className="flex-row items-center gap-1.5">
-                        <Globe size={14} color="rgb(163 163 163)" />
-                        <Text className="text-xs text-muted uppercase">
-                          {data.original_language}
+                        <Calendar size={14} color="rgb(163 163 163)" />
+                        <Text className="text-xs text-muted">
+                          {data.status}
                         </Text>
                       </View>
-                    ) : null}
-                  </View>
+                      {data.original_language ? (
+                        <View className="flex-row items-center gap-1.5">
+                          <Globe size={14} color="rgb(163 163 163)" />
+                          <Text className="text-xs text-muted uppercase">
+                            {data.original_language}
+                          </Text>
+                        </View>
+                      ) : null}
+                    </View>
 
-                  {/* Overview */}
-                  <Card.Description className="text-base leading-6">
-                    {data.overview || 'No overview available yet.'}
-                  </Card.Description>
-                </Card.Body>
-              </Card>
+                    {/* Overview */}
+                    <Card.Description className="text-base leading-6">
+                      {data.overview || 'No overview available yet.'}
+                    </Card.Description>
+                  </Card.Body>
+                </Card>
 
-              {/* Tabbed Content: Cast & Similar */}
-              {topCast?.length || similarMovies.length ? (
-                <DetailTabs cast={topCast ?? []} similar={similarMovies} />
-              ) : null}
+                {/* Tabbed Content: Cast & Similar */}
+                {topCast?.length || similarMovies.length ? (
+                  <DetailTabs cast={topCast ?? []} similar={similarMovies} />
+                ) : null}
+              </StaggeredGroup>
             </>
           ) : null}
           {shouldShowNotFound ? (
