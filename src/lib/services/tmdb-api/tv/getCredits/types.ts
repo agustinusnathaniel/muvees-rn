@@ -8,7 +8,7 @@ export type CreditPersonType = {
   order?: number;
 };
 
-export type MovieCreditsResponse = {
+export type TvCreditsResponse = {
   id: number;
   cast: Array<CreditPersonType>;
   crew: Array<CreditPersonType>;

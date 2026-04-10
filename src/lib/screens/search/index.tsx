@@ -1,4 +1,5 @@
 import { FlashList } from '@shopify/flash-list';
+import { Link } from 'expo-router';
 import {
   Alert,
   Button,
@@ -7,30 +8,45 @@ import {
   SkeletonGroup,
   Spinner,
 } from 'heroui-native';
+import { User } from 'lucide-react-native';
 import { useCallback, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 
 import { MovieCard } from '@/lib/components/MovieCard';
+import { TvShowCard } from '@/lib/components/TvShowCard';
 import { getApiErrorMessage } from '@/lib/services/tmdb-api/error';
-import { useGetMovieList } from '@/lib/services/tmdb-api/movies/getList';
+import {
+  TMDB_IMAGE_SIZES,
+  buildTmdbImageUrl,
+} from '@/lib/services/tmdb-api/image';
+import { useMultiSearch } from '@/lib/services/tmdb-api/search/multi';
+import type {
+  MultiSearchMovieResult,
+  MultiSearchPersonResult,
+  MultiSearchTvResult,
+} from '@/lib/services/tmdb-api/search/multi/types';
 
 const loadingSkeletonKeys = ['1', '2', '3', '4'];
+
+type MultiResult =
+  | MultiSearchMovieResult
+  | MultiSearchTvResult
+  | MultiSearchPersonResult;
 
 const SearchScreen = () => {
   const [query, setQuery] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
   const isReady = searchTerm.length >= 2;
-  const { data, isLoading, isValidating, error, mutate } = useGetMovieList({
-    section: 'popular',
-    params: { query: isReady ? searchTerm : undefined },
+  const { data, isLoading, isValidating, error, mutate } = useMultiSearch({
+    query: isReady ? searchTerm : '',
     isReady,
   });
 
   const hasBlockingState = isLoading && !data;
   const isRefreshing = isValidating && !!data;
   const errorMessage = error
-    ? getApiErrorMessage(error, 'Try searching for a different movie.')
+    ? getApiErrorMessage(error, 'Try searching for something else.')
     : null;
 
   const handleSearch = useCallback((text: string) => {
@@ -44,6 +60,30 @@ const SearchScreen = () => {
     }
   }, [query]);
 
+  const renderResult = ({ item }: { item: MultiResult }) => {
+    if (item.media_type === 'person') {
+      return <PersonCard person={item} />;
+    }
+    if (item.media_type === 'movie') {
+      return (
+        <MovieCard
+          id={item.id}
+          title={item.title}
+          posterPath={item.poster_path}
+          description={item.overview || 'No overview available.'}
+        />
+      );
+    }
+    return (
+      <TvShowCard
+        id={item.id}
+        name={item.name}
+        posterPath={item.poster_path}
+        description={item.overview || 'No overview available.'}
+      />
+    );
+  };
+
   return (
     <View className="flex-1 bg-background">
       {/* Search Header */}
@@ -52,7 +92,7 @@ const SearchScreen = () => {
           <SearchField.Group>
             <SearchField.SearchIcon />
             <SearchField.Input
-              placeholder="Search movies..."
+              placeholder="Search movies, TV shows, people..."
               onSubmitEditing={handleSearchSubmit}
               returnKeyType="search"
             />
@@ -63,7 +103,7 @@ const SearchScreen = () => {
 
       {/* Results List */}
       <FlashList
-        data={data?.results ?? []}
+        data={(data?.results ?? []) as Array<MultiResult>}
         extraData={data?.results}
         ListHeaderComponent={() => (
           <View className="gap-3 p-4">
@@ -72,10 +112,10 @@ const SearchScreen = () => {
               <Card className="p-6">
                 <Card.Body className="items-center gap-3">
                   <Text className="text-lg font-bold text-foreground">
-                    Search Movies
+                    Search Anything
                   </Text>
                   <Text className="text-center text-sm text-muted">
-                    Type a movie title above and press search to find movies.
+                    Search across movies, TV shows, and people.
                   </Text>
                 </Card.Body>
               </Card>
@@ -141,8 +181,7 @@ const SearchScreen = () => {
                     No results found
                   </Text>
                   <Text className="text-center text-sm text-muted">
-                    We couldn&apos;t find any movies matching &ldquo;
-                    {searchTerm}
+                    We couldn&apos;t find anything matching &ldquo;{searchTerm}
                     &rdquo;
                   </Text>
                 </Card.Body>
@@ -151,15 +190,59 @@ const SearchScreen = () => {
           </View>
         )}
         ListFooterComponent={() => <View className="h-6" />}
-        renderItem={({ item }) => (
-          <MovieCard
-            id={item.id}
-            title={item.title}
-            posterPath={item.poster_path}
-            description={item.overview || 'No synopsis available.'}
-          />
-        )}
+        renderItem={renderResult}
       />
+    </View>
+  );
+};
+
+const PersonCard = ({ person }: { person: MultiSearchPersonResult }) => {
+  const profileUri = buildTmdbImageUrl(
+    person.profile_path,
+    TMDB_IMAGE_SIZES.poster,
+  );
+
+  const knownForTitles = person.known_for
+    .filter((k) => k.title ?? k.name)
+    .slice(0, 3)
+    .map((k) => k.title ?? k.name)
+    .join(', ');
+
+  return (
+    <View className="gap-1.5">
+      <Link
+        href={{ pathname: '/person/[id]', params: { id: person.id } }}
+        asChild
+      >
+        <Pressable className="mx-4 active:opacity-90">
+          <Card className="h-22 flex-row items-center gap-3 overflow-hidden p-0">
+            {profileUri ? (
+              <Image
+                source={{ uri: profileUri }}
+                className="h-22 w-16 rounded-l-xl"
+                resizeMode="cover"
+                accessible={false}
+              />
+            ) : (
+              <View className="h-22 w-16 items-center justify-center rounded-l-xl bg-surface-secondary">
+                <User size={20} color="rgb(163 163 163)" />
+              </View>
+            )}
+            <Card.Body className="flex-1 justify-center gap-1 p-3">
+              <View className="flex-row items-center gap-1.5">
+                <User size={14} color="rgb(163 163 163)" />
+                <Card.Title className="text-base leading-5" numberOfLines={1}>
+                  {person.name}
+                </Card.Title>
+              </View>
+              <Card.Description className="text-xs" numberOfLines={1}>
+                {person.known_for_department}
+                {knownForTitles ? ` · ${knownForTitles}` : ''}
+              </Card.Description>
+            </Card.Body>
+          </Card>
+        </Pressable>
+      </Link>
     </View>
   );
 };

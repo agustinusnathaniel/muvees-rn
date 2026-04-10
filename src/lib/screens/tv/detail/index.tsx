@@ -11,14 +11,7 @@ import {
   Tabs,
   useToast,
 } from 'heroui-native';
-import {
-  Bookmark,
-  Calendar,
-  Clock,
-  Globe,
-  Play,
-  Star,
-} from 'lucide-react-native';
+import { Bookmark, Calendar, Globe, Play, Star } from 'lucide-react-native';
 import React from 'react';
 import {
   Image,
@@ -36,29 +29,28 @@ import {
   TMDB_IMAGE_SIZES,
   buildTmdbImageUrl,
 } from '@/lib/services/tmdb-api/image';
-import { useGetMovieCredits } from '@/lib/services/tmdb-api/movies/getCredits';
-import type { CreditPersonType } from '@/lib/services/tmdb-api/movies/getCredits/types';
-import { useGetMovieDetail } from '@/lib/services/tmdb-api/movies/getDetail';
-import { useGetSimilarMovies } from '@/lib/services/tmdb-api/movies/getSimilar';
-import { useGetMovieVideos } from '@/lib/services/tmdb-api/movies/getVideos';
-import type { VideoResultType } from '@/lib/services/tmdb-api/movies/getVideos/types';
+import { useGetTvCredits } from '@/lib/services/tmdb-api/tv/getCredits';
+import type { CreditPersonType } from '@/lib/services/tmdb-api/tv/getCredits/types';
+import { useGetTvDetail } from '@/lib/services/tmdb-api/tv/getDetail';
+import { useGetSimilarTvShows } from '@/lib/services/tmdb-api/tv/getSimilar';
+import { useGetTvVideos } from '@/lib/services/tmdb-api/tv/getVideos';
 import { useWatchlist } from '@/lib/services/watchlist/hooks';
 
-const MovieDetailScreen = () => {
+const TvShowDetailScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const isReady = !!id;
 
   const { items, toggleItem } = useWatchlist();
   const { toast } = useToast();
-  const isInWatchlist = (id: number) => items.some((i) => i.id === id);
+  const isInWatchlist = (showId: number) => items.some((i) => i.id === showId);
 
-  const { data, isLoading, isValidating, error, mutate } = useGetMovieDetail({
+  const { data, isLoading, isValidating, error, mutate } = useGetTvDetail({
     id: id ?? '',
     isReady,
   });
-  const { data: creditsData } = useGetMovieCredits({ id: id ?? '', isReady });
-  const { data: similarData } = useGetSimilarMovies({ id: id ?? '', isReady });
-  const { data: videosData } = useGetMovieVideos({ id: id ?? '', isReady });
+  const { data: creditsData } = useGetTvCredits({ id: id ?? '', isReady });
+  const { data: similarData } = useGetSimilarTvShows({ id: id ?? '', isReady });
+  const { data: videosData } = useGetTvVideos({ id: id ?? '', isReady });
 
   const { width } = useWindowDimensions();
 
@@ -87,28 +79,17 @@ const MovieDetailScreen = () => {
     )
     .slice(0, 10);
 
-  const director = creditsData?.crew.find(
-    (c: CreditPersonType) => c.job === 'Director',
-  );
-
   const trailer =
     videosData?.results.find(
-      (v: VideoResultType) =>
-        v.type === 'Trailer' && v.site === 'YouTube' && v.official,
-    ) ??
-    videosData?.results.find(
-      (v: VideoResultType) => v.site === 'YouTube' && v.official,
-    );
+      (v) => v.type === 'Trailer' && v.site === 'YouTube' && v.official,
+    ) ?? videosData?.results.find((v) => v.site === 'YouTube' && v.official);
 
-  const similarMovies = similarData?.results.slice(0, 6) ?? [];
-
-  const runtimeHours = data?.runtime ? Math.floor(data.runtime / 60) : null;
-  const runtimeMins = data?.runtime ? data.runtime % 60 : null;
+  const similarShows = similarData?.results.slice(0, 6) ?? [];
 
   const handleShare = async () => {
     if (!data) return;
     await Share.share({
-      message: `${data.title} (${data.release_date ? dayjs(data.release_date).format('YYYY') : ''})\n\n${data.overview}`,
+      message: `${data.name} (${data.first_air_date ? dayjs(data.first_air_date).format('YYYY') : ''})\n\n${data.overview}`,
     });
   };
 
@@ -116,15 +97,15 @@ const MovieDetailScreen = () => {
     if (!data) return;
     const wasAdded = toggleItem({
       id: data.id,
-      title: data.title,
+      title: data.name,
       poster_path: data.poster_path,
       vote_average: data.vote_average,
-      release_date: data.release_date,
+      release_date: data.first_air_date,
     });
     toast.show({
       variant: wasAdded ? 'success' : 'default',
       label: wasAdded ? 'Added to watchlist' : 'Removed from watchlist',
-      description: data.title,
+      description: data.name,
     });
   };
 
@@ -138,7 +119,7 @@ const MovieDetailScreen = () => {
     <>
       <Stack.Screen
         options={{
-          headerTitle: data?.title ?? 'Loading...',
+          headerTitle: data?.name ?? 'Loading...',
           headerRight: data
             ? () => (
                 <View className="flex-row items-center gap-2">
@@ -185,7 +166,7 @@ const MovieDetailScreen = () => {
             <Alert status="danger">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>Unable to load this movie</Alert.Title>
+                <Alert.Title>Unable to load this show</Alert.Title>
                 <Alert.Description>
                   {errorMessage ?? 'Pull to refresh or retry below.'}
                 </Alert.Description>
@@ -197,7 +178,7 @@ const MovieDetailScreen = () => {
           ) : null}
           {isRefreshing ? (
             <Text className="text-xs text-muted">
-              Refreshing movie details...
+              Refreshing show details...
             </Text>
           ) : null}
           {data ? (
@@ -209,7 +190,7 @@ const MovieDetailScreen = () => {
                   className="h-52 w-full rounded-2xl"
                   resizeMode="cover"
                   accessibilityRole="image"
-                  accessibilityLabel={`${data.title} backdrop`}
+                  accessibilityLabel={`${data.name} backdrop`}
                 />
               ) : (
                 <View className="h-52 w-full items-center justify-center rounded-2xl bg-surface-secondary">
@@ -227,7 +208,7 @@ const MovieDetailScreen = () => {
                 </Button>
               ) : null}
 
-              {/* Movie Info Card */}
+              {/* Show Info Card */}
               <Card className="gap-4">
                 <Card.Body className="gap-4">
                   <View className="flex-row items-start gap-3">
@@ -257,16 +238,16 @@ const MovieDetailScreen = () => {
                         className="text-2xl leading-7"
                         numberOfLines={3}
                       >
-                        {data.title}
+                        {data.name}
                       </Card.Title>
                       {data.tagline ? (
                         <Card.Description className="italic" numberOfLines={2}>
                           {data.tagline}
                         </Card.Description>
                       ) : null}
-                      {data.release_date ? (
+                      {data.first_air_date ? (
                         <Card.Description>
-                          {dayjs(data.release_date).format('DD MMM YYYY')}
+                          {dayjs(data.first_air_date).format('DD MMM YYYY')}
                         </Card.Description>
                       ) : null}
                     </View>
@@ -290,7 +271,7 @@ const MovieDetailScreen = () => {
                     </View>
                   ) : null}
 
-                  {/* Rating & Runtime Row */}
+                  {/* Rating & Seasons */}
                   <View className="flex-row flex-wrap items-center gap-4">
                     <View className="flex-row items-center gap-1.5">
                       <Star
@@ -305,39 +286,27 @@ const MovieDetailScreen = () => {
                         ({data.vote_count.toLocaleString()})
                       </Text>
                     </View>
-                    {data.runtime ? (
-                      <View className="flex-row items-center gap-1.5">
-                        <Clock size={14} color="rgb(163 163 163)" />
-                        <Text className="text-sm text-foreground">
-                          {runtimeHours ? `${runtimeHours}h ` : ''}
-                          {runtimeMins ?? 0}m
-                        </Text>
-                      </View>
-                    ) : null}
-                    {director ? (
-                      <View className="flex-row items-center gap-1.5">
-                        <Globe size={14} color="rgb(163 163 163)" />
-                        <Text
-                          className="text-sm text-foreground"
-                          numberOfLines={1}
-                        >
-                          Dir: {director.name}
-                        </Text>
-                      </View>
-                    ) : null}
+                    <View className="flex-row items-center gap-1.5">
+                      <Calendar size={14} color="rgb(163 163 163)" />
+                      <Text className="text-sm text-foreground">
+                        {data.number_of_seasons} season
+                        {data.number_of_seasons !== 1 ? 's' : ''} ·{' '}
+                        {data.number_of_episodes} episodes
+                      </Text>
+                    </View>
                   </View>
 
                   {/* Status & Language */}
                   <View className="flex-row flex-wrap gap-x-4 gap-y-1">
                     <View className="flex-row items-center gap-1.5">
-                      <Calendar size={14} color="rgb(163 163 163)" />
+                      <Globe size={14} color="rgb(163 163 163)" />
                       <Text className="text-xs text-muted">{data.status}</Text>
                     </View>
-                    {data.original_language ? (
+                    {data.origin_country?.length ? (
                       <View className="flex-row items-center gap-1.5">
                         <Globe size={14} color="rgb(163 163 163)" />
                         <Text className="text-xs text-muted uppercase">
-                          {data.original_language}
+                          {data.origin_country.join(', ')}
                         </Text>
                       </View>
                     ) : null}
@@ -347,21 +316,32 @@ const MovieDetailScreen = () => {
                   <Card.Description className="text-base leading-6">
                     {data.overview || 'No overview available yet.'}
                   </Card.Description>
+
+                  {/* Networks */}
+                  {data.networks?.length ? (
+                    <View className="flex-row flex-wrap gap-2">
+                      {data.networks.map((network) => (
+                        <Chip key={network.id} variant="soft" size="sm">
+                          <Chip.Label>{network.name}</Chip.Label>
+                        </Chip>
+                      ))}
+                    </View>
+                  ) : null}
                 </Card.Body>
               </Card>
 
               {/* Tabbed Content: Cast & Similar */}
-              {topCast?.length || similarMovies.length ? (
-                <DetailTabs cast={topCast ?? []} similar={similarMovies} />
+              {topCast?.length || similarShows.length ? (
+                <DetailTabs cast={topCast ?? []} similar={similarShows} />
               ) : null}
             </>
           ) : null}
           {shouldShowNotFound ? (
             <Card className="p-4">
               <Card.Body className="gap-2">
-                <Card.Title>Movie not found</Card.Title>
+                <Card.Title>TV show not found</Card.Title>
                 <Card.Description>
-                  We couldn&apos;t find the requested movie.
+                  We couldn&apos;t find the requested show.
                 </Card.Description>
               </Card.Body>
             </Card>
@@ -376,7 +356,7 @@ type DetailTabsProps = {
   cast: Array<CreditPersonType>;
   similar: Array<{
     id: number;
-    title: string;
+    name: string;
     poster_path?: string | null;
     vote_average: number;
   }>;
@@ -479,15 +459,15 @@ const DetailTabs = ({ cast, similar }: DetailTabsProps) => {
               showsHorizontalScrollIndicator={false}
               contentContainerClassName="gap-3 pr-4"
             >
-              {similar.map((movie) => {
+              {similar.map((show) => {
                 const posterUri = buildTmdbImageUrl(
-                  movie.poster_path,
+                  show.poster_path,
                   TMDB_IMAGE_SIZES.poster,
                 );
                 return (
                   <Link
-                    key={movie.id}
-                    href={{ pathname: '/movie/[id]', params: { id: movie.id } }}
+                    key={show.id}
+                    href={{ pathname: '/tv/[id]', params: { id: show.id } }}
                     asChild
                   >
                     <Pressable className="w-32 gap-1.5 active:opacity-80">
@@ -507,7 +487,7 @@ const DetailTabs = ({ cast, similar }: DetailTabsProps) => {
                         className="text-xs font-semibold text-foreground"
                         numberOfLines={2}
                       >
-                        {movie.title}
+                        {show.name}
                       </Text>
                       <View className="flex-row items-center gap-1">
                         <Star
@@ -516,7 +496,7 @@ const DetailTabs = ({ cast, similar }: DetailTabsProps) => {
                           fill="rgb(250 204 21)"
                         />
                         <Text className="text-xs text-muted">
-                          {movie.vote_average.toFixed(1)}
+                          {show.vote_average.toFixed(1)}
                         </Text>
                       </View>
                     </Pressable>
@@ -531,4 +511,4 @@ const DetailTabs = ({ cast, similar }: DetailTabsProps) => {
   );
 };
 
-export default MovieDetailScreen;
+export default TvShowDetailScreen;
