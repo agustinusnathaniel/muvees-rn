@@ -1,15 +1,11 @@
 import { FlashList } from '@shopify/flash-list';
-import { Link } from 'expo-router';
 import { Card, SkeletonGroup } from 'heroui-native';
-import { Image, Pressable, RefreshControl, Text, View } from 'react-native';
+import { RefreshControl, Text, View } from 'react-native';
 
+import { MovieCard } from '@/lib/components/MovieCard';
 import { SelectInput } from '@/lib/components/SelectInput';
 import { useViewModelContext } from '@/lib/providers/ViewModel';
 import type { MovieListPageViewModel } from '@/lib/screens/movie/list/hooks';
-import {
-  TMDB_IMAGE_SIZES,
-  buildTmdbImageUrl,
-} from '@/lib/services/tmdb-api/image';
 import type { ListType } from '@/lib/services/tmdb-api/movies/getList/types';
 
 const sectionOptions: Array<{ label: string; value: ListType }> = [
@@ -94,60 +90,14 @@ const MovieList = () => {
           )}
         </View>
       )}
-      renderItem={({ item }) => {
-        const posterUri = buildTmdbImageUrl(
-          item.poster_path,
-          TMDB_IMAGE_SIZES.poster,
-        );
-
-        return (
-          <Link
-            href={{ pathname: '/movie/[id]', params: { id: item.id } }}
-            asChild
-          >
-            <Pressable
-              className="mx-4 active:opacity-90"
-              hitSlop={6}
-              accessibilityRole="button"
-              accessibilityLabel={`Open details for ${item.title}`}
-              accessibilityHint="Navigates to the movie details screen"
-            >
-              <Card className="h-35 flex-row overflow-hidden p-0">
-                {posterUri ? (
-                  <Image
-                    source={{ uri: posterUri }}
-                    className="h-35 w-25 rounded-l-xl"
-                    resizeMode="cover"
-                    accessible={false}
-                  />
-                ) : (
-                  <View className="h-35 w-25 items-center justify-center rounded-l-xl bg-surface-secondary px-2">
-                    <Text className="text-center text-xs text-muted">
-                      No poster
-                    </Text>
-                  </View>
-                )}
-                <Card.Body className="flex-1 justify-between p-3">
-                  <Card.Title
-                    className="text-base leading-5"
-                    numberOfLines={2}
-                    ellipsizeMode="tail"
-                  >
-                    {item.title}
-                  </Card.Title>
-                  <Card.Description
-                    className="text-sm"
-                    numberOfLines={3}
-                    ellipsizeMode="tail"
-                  >
-                    {item.overview || 'No synopsis available.'}
-                  </Card.Description>
-                </Card.Body>
-              </Card>
-            </Pressable>
-          </Link>
-        );
-      }}
+      renderItem={({ item }) => (
+        <MovieCard
+          id={item.id}
+          title={item.title}
+          posterPath={item.poster_path}
+          description={item.overview || 'No synopsis available.'}
+        />
+      )}
     />
   );
 };
