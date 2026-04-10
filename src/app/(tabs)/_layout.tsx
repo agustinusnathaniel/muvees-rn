@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { useThemeColor } from 'heroui-native';
-import { Home, Search, SquarePen } from 'lucide-react-native';
+import { Bookmark, Home, Search, SquarePen } from 'lucide-react-native';
 
 export default function TabLayout() {
   const iconColor = useThemeColor('foreground');
@@ -28,6 +28,15 @@ export default function TabLayout() {
           title: 'Search',
           tabBarIcon: ({ color }) => (
             <Search size={24} color={color ?? iconColor} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="watchlist"
+        options={{
+          title: 'Watchlist',
+          tabBarIcon: ({ color }) => (
+            <Bookmark size={24} color={color ?? iconColor} />
           ),
         }}
       />

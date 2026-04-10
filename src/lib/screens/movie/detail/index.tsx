@@ -9,8 +9,16 @@ import {
   SkeletonGroup,
   Spinner,
   Tabs,
+  useToast,
 } from 'heroui-native';
-import { Calendar, Clock, Globe, Play, Star } from 'lucide-react-native';
+import {
+  Bookmark,
+  Calendar,
+  Clock,
+  Globe,
+  Play,
+  Star,
+} from 'lucide-react-native';
 import React from 'react';
 import {
   Image,
@@ -36,10 +44,15 @@ import type {
 } from '@/lib/services/tmdb-api/movies/getDetail/types';
 import { useGetSimilarMovies } from '@/lib/services/tmdb-api/movies/getSimilar';
 import { useGetMovieVideos } from '@/lib/services/tmdb-api/movies/getVideos';
+import { useWatchlist } from '@/lib/services/watchlist/hooks';
 
 const MovieDetailScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const isReady = !!id;
+
+  const { items, toggleItem } = useWatchlist();
+  const { toast } = useToast();
+  const isInWatchlist = (id: number) => items.some((i) => i.id === id);
 
   const { data, isLoading, isValidating, error, mutate } = useGetMovieDetail({
     id: id ?? '',
@@ -101,6 +114,22 @@ const MovieDetailScreen = () => {
     });
   };
 
+  const handleWatchlistToggle = () => {
+    if (!data) return;
+    const wasAdded = toggleItem({
+      id: data.id,
+      title: data.title,
+      poster_path: data.poster_path,
+      vote_average: data.vote_average,
+      release_date: data.release_date,
+    });
+    toast.show({
+      variant: wasAdded ? 'success' : 'default',
+      label: wasAdded ? 'Added to watchlist' : 'Removed from watchlist',
+      description: data.title,
+    });
+  };
+
   const openTrailer = () => {
     if (!trailer) return;
     const url = `https://www.youtube.com/watch?v=${trailer.key}`;
@@ -114,9 +143,26 @@ const MovieDetailScreen = () => {
           headerTitle: data?.title ?? 'Loading...',
           headerRight: data
             ? () => (
-                <Button variant="ghost" size="sm" onPress={handleShare}>
-                  <Button.Label>Share</Button.Label>
-                </Button>
+                <View className="flex-row items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onPress={handleWatchlistToggle}
+                  >
+                    {isInWatchlist(data.id) ? (
+                      <Bookmark
+                        size={18}
+                        fill="rgb(59 130 246)"
+                        color="rgb(59 130 246)"
+                      />
+                    ) : (
+                      <Bookmark size={18} color="rgb(163 163 163)" />
+                    )}
+                  </Button>
+                  <Button variant="ghost" size="sm" onPress={handleShare}>
+                    <Button.Label>Share</Button.Label>
+                  </Button>
+                </View>
               )
             : undefined,
         }}

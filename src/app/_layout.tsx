@@ -21,7 +21,11 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { type HeroUINativeConfig, HeroUINativeProvider } from 'heroui-native';
+import {
+  type HeroUINativeConfig,
+  HeroUINativeProvider,
+  ToastProvider,
+} from 'heroui-native';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SWRConfig } from 'swr';
@@ -80,26 +84,28 @@ function RootLayoutNav() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <HeroUINativeProvider config={heroUiNativeConfig}>
-        <ThemeProvider
-          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
-          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-          <SWRConfig
-            value={{
-              provider: () => new Map(),
-              isOnline() {
-                return true;
-              },
-              isVisible() {
-                return true;
-              },
-              initFocus() {},
-              initReconnect() {},
-            }}
+        <ToastProvider>
+          <ThemeProvider
+            value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
           >
-            <AppStack />
-          </SWRConfig>
-        </ThemeProvider>
+            <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+            <SWRConfig
+              value={{
+                provider: () => new Map(),
+                isOnline() {
+                  return true;
+                },
+                isVisible() {
+                  return true;
+                },
+                initFocus() {},
+                initReconnect() {},
+              }}
+            >
+              <AppStack />
+            </SWRConfig>
+          </ThemeProvider>
+        </ToastProvider>
       </HeroUINativeProvider>
     </GestureHandlerRootView>
   );
