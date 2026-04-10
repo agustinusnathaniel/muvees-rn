@@ -1,6 +1,6 @@
-import { Home, SquarePen } from 'lucide-react-native';
 import { Tabs } from 'expo-router';
 import { useThemeColor } from 'heroui-native';
+import { Home, Search, SquarePen } from 'lucide-react-native';
 
 export default function TabLayout() {
   const iconColor = useThemeColor('foreground');
@@ -16,9 +16,18 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Movies',
           tabBarIcon: ({ color }) => (
             <Home size={24} color={color ?? iconColor} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: 'Search',
+          tabBarIcon: ({ color }) => (
+            <Search size={24} color={color ?? iconColor} />
           ),
         }}
       />

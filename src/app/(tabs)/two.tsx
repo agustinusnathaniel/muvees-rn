@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import {
   Button,
   Card,
@@ -9,6 +7,8 @@ import {
   Label,
   TextField,
 } from 'heroui-native';
+import { useState } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
 export default function TabTwoScreen() {
   const [name, setName] = useState('');
@@ -61,9 +61,7 @@ export default function TabTwoScreen() {
                 onChangeText={setPassword}
                 autoCapitalize="none"
               />
-              <Description>
-                Must contain at least 6 characters.
-              </Description>
+              <Description>Must contain at least 6 characters.</Description>
               <FieldError>Password must be at least 6 characters.</FieldError>
             </TextField>
             <Button onPress={handleSubmit}>

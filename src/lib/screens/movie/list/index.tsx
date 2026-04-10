@@ -1,5 +1,5 @@
-import { View } from 'react-native';
 import { Alert, Button, Spinner } from 'heroui-native';
+import { View } from 'react-native';
 
 import { ViewModelProvider } from '@/lib/providers/ViewModel';
 import { getApiErrorMessage } from '@/lib/services/tmdb-api/error';
@@ -36,7 +36,11 @@ export const MovieListScreen = () => {
                   {movieListErrorMessage ?? 'Please try again shortly.'}
                 </Alert.Description>
               </Alert.Content>
-              <Button size="sm" variant="danger" onPress={() => void refreshMovieList()}>
+              <Button
+                size="sm"
+                variant="danger"
+                onPress={() => void refreshMovieList()}
+              >
                 Retry
               </Button>
             </Alert>

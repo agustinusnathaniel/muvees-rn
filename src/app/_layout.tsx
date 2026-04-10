@@ -12,22 +12,19 @@ import {
   Nunito_800ExtraBold,
   Nunito_900Black,
 } from '@expo-google-fonts/nunito';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import {
-  ThemeProvider,
-  DefaultTheme,
   DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
 } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { useEffect } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { SWRConfig } from 'swr';
+import { type HeroUINativeConfig, HeroUINativeProvider } from 'heroui-native';
+import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import {
-  HeroUINativeProvider,
-  type HeroUINativeConfig,
-} from 'heroui-native';
+import { SWRConfig } from 'swr';
 
 import { useColorScheme } from '@/lib/hooks/use-color-scheme';
 

@@ -1,8 +1,8 @@
-import { Check } from 'lucide-react-native';
-import { useMemo, useState, useCallback } from 'react';
-import { TextInput, ScrollView, Keyboard, View } from 'react-native';
 import { Select } from 'heroui-native';
 import { useThemeColor } from 'heroui-native';
+import { Check } from 'lucide-react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { Keyboard, ScrollView, TextInput, View } from 'react-native';
 
 type SelectOptionValue = {
   value: string;
@@ -81,7 +81,10 @@ export const SelectInput = <Option,>({
       presentation="bottom-sheet"
     >
       <Select.Trigger>
-        <Select.Value placeholder={placeholder ?? 'Select...'} className="font-semibold" />
+        <Select.Value
+          placeholder={placeholder ?? 'Select...'}
+          className="font-semibold"
+        />
         <Select.TriggerIndicator />
       </Select.Trigger>
       <Select.Portal>
