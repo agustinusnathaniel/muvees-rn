@@ -1,21 +1,21 @@
-export type SimilarMovieListResponse = {
+export type TvSimilarResponse = {
   id: number;
   page: number;
   results: Array<{
     id: number;
-    title: string;
+    name: string;
     overview: string;
     poster_path?: string | null;
     backdrop_path?: string | null;
     vote_average: number;
     vote_count: number;
-    release_date: string;
-    adult: boolean;
+    first_air_date: string;
+    origin_country: Array<string>;
     original_language: string;
-    original_title: string;
+    original_name: string;
     popularity: number;
     genre_ids: Array<number>;
-    video: boolean;
+    adult: boolean;
   }>;
   total_pages: number;
   total_results: number;
