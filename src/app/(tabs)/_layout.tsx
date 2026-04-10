@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { useThemeColor } from 'heroui-native';
-import { Bookmark, Film, Home, Search, SquarePen } from 'lucide-react-native';
+import { Bookmark, Film, Home, Search } from 'lucide-react-native';
 
 export default function TabLayout() {
   const iconColor = useThemeColor('foreground');
@@ -46,15 +46,6 @@ export default function TabLayout() {
           title: 'Watchlist',
           tabBarIcon: ({ color }) => (
             <Bookmark size={24} color={color ?? iconColor} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Form',
-          tabBarIcon: ({ color }) => (
-            <SquarePen size={24} color={color ?? iconColor} />
           ),
         }}
       />
