@@ -1,6 +1,6 @@
 import { Link, Stack } from 'expo-router';
-import { View, Text } from 'react-native';
 import { Button } from 'heroui-native';
+import { Text, View } from 'react-native';
 
 export default function NotFoundScreen() {
   return (

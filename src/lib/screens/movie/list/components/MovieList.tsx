@@ -1,14 +1,14 @@
 import { FlashList } from '@shopify/flash-list';
 import { Link } from 'expo-router';
-import { RefreshControl, View, Image, Pressable, Text } from 'react-native';
 import { Card, SkeletonGroup } from 'heroui-native';
+import { Image, Pressable, RefreshControl, Text, View } from 'react-native';
 
 import { SelectInput } from '@/lib/components/SelectInput';
 import { useViewModelContext } from '@/lib/providers/ViewModel';
 import type { MovieListPageViewModel } from '@/lib/screens/movie/list/hooks';
 import {
-  buildTmdbImageUrl,
   TMDB_IMAGE_SIZES,
+  buildTmdbImageUrl,
 } from '@/lib/services/tmdb-api/image';
 import type { ListType } from '@/lib/services/tmdb-api/movies/getList/types';
 
