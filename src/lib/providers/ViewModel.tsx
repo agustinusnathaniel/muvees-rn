@@ -1,13 +1,13 @@
-import React from 'react';
+import { createContext, use, type PropsWithChildren } from 'react';
 
 type ViewModelValue<T> = T;
 
-const ViewModelContext = React.createContext<
-  ViewModelValue<unknown> | undefined
->(undefined);
+const ViewModelContext = createContext<ViewModelValue<unknown> | undefined>(
+  undefined,
+);
 
 export const useViewModelContext = <T = unknown>() => {
-  const viewModelContextValue = React.useContext(ViewModelContext);
+  const viewModelContextValue = use(ViewModelContext);
 
   if (!viewModelContextValue) {
     throw new Error(
@@ -21,10 +21,8 @@ export const useViewModelContext = <T = unknown>() => {
 export const ViewModelProvider = <T = unknown>({
   children,
   ...props
-}: React.PropsWithChildren<T>) => {
+}: PropsWithChildren<T>) => {
   return (
-    <ViewModelContext.Provider value={props}>
-      {children}
-    </ViewModelContext.Provider>
+    <ViewModelContext value={props}>{children}</ViewModelContext>
   );
 };
