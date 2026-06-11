@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.0](https://github.com/agustinusnathaniel/muvees-rn/compare/v1.1.2...v1.2.0) (2026-06-11)
+
+
+### Features
+
+* add movie search and enrich movie detail ([c67c902](https://github.com/agustinusnathaniel/muvees-rn/commit/c67c9029a8a8c1ccb70805b86980118b98c104ea))
+* add watchlist ([87df11c](https://github.com/agustinusnathaniel/muvees-rn/commit/87df11c9ca994fa8c6c48007bdabb60a77b000c4))
+* **app:** extend with TV features, person detail, and multi-search ([e3f5d68](https://github.com/agustinusnathaniel/muvees-rn/commit/e3f5d68b2d55116b83b28f1404886f559598f661))
+
 ## [1.1.3](https://github.com/sozonome/learn-tamagui-expo/compare/v1.1.2...v1.1.3) (2025-02-24)
 
 ## [1.1.2](https://github.com/sozonome/learn-tamagui-expo/compare/v1.1.1...v1.1.2) (2024-11-29)

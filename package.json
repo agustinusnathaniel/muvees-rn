@@ -1,7 +1,7 @@
 {
   "name": "muvees-expo",
   "main": "expo-router/entry",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "scripts": {
     "up-latest": "yarn upgrade-interactive",
     "start": "cross-env EXPO_NO_DOTENV=1 expo start",
