@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "fingerprint": {
+    "packageJson": {
+      "path": "/home/nathan/Personal/projects/experiments/muvees-rn/package.json",
+      "mtimeMs": 1775893321861.4517,
+      "size": 4916
+    },
+    "lockfile": {
+      "path": "/home/nathan/Personal/projects/experiments/muvees-rn/yarn.lock",
+      "mtimeMs": 1781158033081.9658,
+      "size": 384905
+    },
+    "configDirs": [
+      {
+        "path": "/home/nathan/Personal/projects/experiments/muvees-rn/.vscode",
+        "mtimeMs": 1778231461026.5125,
+        "size": 4096
+      }
+    ]
+  },
+  "profile": {
+    "framework": null,
+    "frameworkVersion": null,
+    "bundler": "expo",
+    "router": "expo-router",
+    "styling": [
+      "tailwind"
+    ],
+    "typescript": true,
+    "runtime": "native",
+    "vitePlus": false,
+    "monorepo": false,
+    "monorepoTool": null,
+    "workspaceRoot": false,
+    "nodeVersion": "20",
+    "hasGitHub": false,
+    "hasGit": true,
+    "existing": {
+      "biome": true,
+      "tsconfig": true,
+      "renovate": false,
+      "commitlint": false,
+      "knip": true,
+      "plop": false,
+      "turbo": false,
+      "vscodeSettings": true,
+      "viteConfig": false,
+      "versionrc": false,
+      "gitignore": true,
+      "eslint": false,
+      "oxlint": false,
+      "oxfmt": false,
+      "githubWorkflows": [],
+      "changeset": false,
+      "agentsMd": true
+    },
+    "packageManager": "yarn"
+  },
+  "computedAt": "2026-06-11T06:09:49.387Z",
+  "durationMs": 19.867128000000008
+}
