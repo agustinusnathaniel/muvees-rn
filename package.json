@@ -95,7 +95,7 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
+    "@babel/core": "^8.0.0",
     "@expo/metro-runtime": "~56.0.15",
     "@types/react": "~19.2.14",
     "commit-and-tag-version": "^12.7.1",
